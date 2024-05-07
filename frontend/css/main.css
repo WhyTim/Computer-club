@@ -16,7 +16,7 @@ nav {
 a { 
     cursor: pointer ;
     text-decoration: none ; 
-    opacity: 0.75 ; 
+    opacity: 1 ; 
     color : #fff ; 
 }
 
@@ -344,8 +344,93 @@ padding : 0 ;
 }
 }
 
-.social {
-    color: #000000;
+
+
+/* COMPUTERS */
+
+.computer-container {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    margin-top: 20px;
 }
 
-/* SIGN UP */
+.computer {
+    width: 500px;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    box-sizing: border-box;
+}
+
+.computer img {
+    width: 100%;
+    border-radius: 5px;
+}
+
+.computer h2 {
+    margin-top: 10px;
+    text-align: center;
+}
+
+.computer p {
+    margin: 10px 0;
+}
+
+.computer.price {
+    font-size: 20px;
+    font-weight: bold;
+    text-align: center;
+    color: #007bff;
+}
+
+/* NEWS */
+
+
+
+
+
+.news-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
+.news {
+    width: 300px;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    box-sizing: border-box;
+    background-color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.3s ease;
+}
+
+.news:hover {
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.news img {
+    width: 100%;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+}
+
+.news h2 {
+    margin-top: 10px;
+    font-size: 18px;
+    color: #333;
+}
+
+.news .date {
+    margin-top: 5px;
+    color: #666;
+}
+
+.news p {
+    margin-top: 10px;
+    font-size: 14px;
+    color: #555;
+}
