@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Бронирование компьютеров - Компьютерный клуб "Mana"</title>
+    <link rel="stylesheet" href="css/booking.css"> <!-- Подключение файла стилей -->
+    <link href="https://fonts.googleapis.com/css?family=Quicksand" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
+
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+</head>
+<body>
+
+    <header> 
+        <h2> <a href="index.html"> MANA </a></h2>
+        <nav>
+        <li><a href="#projects"> О клубе </a></li>
+        <li><a href="#technologies"> Новости </a></li>
+        <li><a href="#contact"> Контакты </a></li>
+        <li><a class="order" href="booking.html"> Забронировать </a></li>
+        <li><a class="account" href="account.html"> Личный кабинет </a></li>
+        </nav>
+    </header>
+
+
+    <h1>Бронирование компьютеров</h1>
+    <div class="form-container">
+        <form id="booking-form">
+            <label for="date">Дата:</label>
+            <input type="date" id="date" name="date" required><br><br>
+
+            <label for="time">Время:</label>
+            <input type="time" id="time" name="time" required><br><br>
+
+            <label for="service">Услуга:</label>
+            <select id="service" name="service" required>
+                <option value="" disabled selected>Выберите услугу</option>
+                <option value="basic">Обычный зал</option>
+                <option value="premium">Премиум зал</option>
+                <!-- Добавьте другие варианты услуг, если необходимо -->
+            </select><br><br>
+
+            <label for="duration">Продолжительность (в часах):</label>
+            <input type="number" id="duration" name="duration" min="1" max="24" required><br><br>
+
+            <label for="total">Общая стоимость:</label>
+            <input type="text" id="total" name="total" readonly><br><br>
+        </form>
+
+
+
+        <form id="booking-form">
+            <!-- Поля для ввода даты, времени, услуги и продолжительности оставляем без изменений -->
+
+            <fieldset>
+                <legend>Выберите компьютер(ы) (максимум 5):</legend>
+                <div id="computer-grid">
+                    <!-- Компьютеры будут добавлены динамически с помощью JavaScript -->
+                </div>
+            </fieldset><br>
+
+            <label for="total">Количество выбранных компьютеров:</label>
+            <input type="text" id="total-computers" name="total-computers" readonly><br><br>
+
+            <!-- Поле для отображения общей стоимости оставляем без изменений -->
+
+            <button type="submit">Забронировать</button>
+        </form>
+    </div>
+
+    <div class="summary">
+        <!-- Поле для отображения выбранных компьютеров -->
+        <div id="selected-computers" class="selected-computers"></div>
+
+        <!-- Поле для отображения итоговой стоимости -->
+        <label for="total-cost">Итоговая стоимость:</label>
+        <input type="text" id="total-cost" name="total-cost" readonly>
+    </div>
+    
+    <footer id="contact">
+        <p>КОМПЬЮТЕРНЫЙ КЛУБ MANA</p>
+        <p>© Copyright All Rights Reserved</a></p>
+        <ul>
+            <p>+7 (922) 900-01-80</a></p>
+            <li><a href="https://vk.com/mana_kirov"><i class="fab fa-vk fa-2x"></i></a></li>
+            <li><a href="https://t.me/mana_kirov"><i class="fab fa-telegram fa-2x"></i></a></li>
+            <li><a href="https://vk.com/away.php?to=https%3A%2F%2Fwww.twitch.tv%2Fmana_off"><i class="fab fa-twitch fa-2x"></i></a></li>
+            <li><a href="https://discord.gg/A8pYcmUvqf"><i class="fab fa-discord fa-2x"></i></a></li>
+        </ul>
+    </footer>
+
+    <script src="js/script.js"></script> <!-- Подключение файла JavaScript -->
+</body>
+</html>
