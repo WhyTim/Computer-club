@@ -26,6 +26,14 @@ a:hover {
     opacity: 1;
 }
 
+a.help {
+  color:rgb(192, 194, 110)
+}
+
+p{
+  color:rgb(150, 150, 150)
+}
+
 header { 
     z-index: 2;
     position: absolute ;

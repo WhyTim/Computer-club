@@ -35,39 +35,24 @@
     <header> 
         <h2> <a href="index.html"> MANA </a></h2>
         <nav>
-        <li><a href="#"> Компьютеры и залы </a></li>
-        <li><a href="#"> Новости </a></li>
-        <li><a href="#"> Контакты </a></li>
+        <li><a href="services.html"> Услуги и компьютеры </a></li>
+        <li><a href="news.html"> Новости </a></li>
+        <li><a href="contacts.html"> Контакты </a></li>
         <li><a class="sign" href="signin.html"> Вход </a></li>
         </nav>
     </header>
 
-    <body>
-      <div class="container">
-        <div class="forms-container">
-          <div class="signin-signup">
-            <form action="" class="sign-up-form">
-              <h2 class="title">Регистрация</h2>
-              <div class="input-field">
-                <i class="fas fa-user"></i>
-                <input type="text" placeholder="Логин" />
-              </div>
-              <div class="input-field">
-                <i class="fas fa-envelope"></i>
-                <input type="email" placeholder="Почта" />
-              </div>
-              <div class="input-field">
-                <i class="fas fa-lock"></i>
-                <input type="password" placeholder="Пароль" />
-              </div>
-              <input type="submit" value="Зарегистрироваться" class="btn solid" />
-  
-              <p class="help-text">Или <a href="signin.html" class="help-text">ввойдите</a>, если уже зарегистрированы</p>
-            </form>
-          </div>
-        </div>
-      </div>
-    </body>     
+    <div class="login-container">
+      <h1>Регистрация</h1>
+      <form action="">
+          <input type="text" name="name" placeholder="Имя">
+          <input type="text" name="email" placeholder="Почта">
+          <input type="text" name="login" placeholder="Логин">
+          <input type="password" name="password" placeholder="Пароль">
+          <button type="submit">Зарегистрироваться</button>
+          <p>Уже зарегистрированы? <a href="signin.html" class = "help">Войдите</a></p>
+      </form>
+  </div>
 
     <footer id="contact">
       <p>КОМПЬЮТЕРНЫЙ КЛУБ MANA</p>
