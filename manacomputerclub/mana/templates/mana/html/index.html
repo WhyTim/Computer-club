@@ -1,0 +1,196 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Mana - компьютерный клуб</title>
+    <head>
+      <link rel="icon" type="image/jpg" href="{% static 'mana/imgs/logo.jpg' %}"/> 
+    </head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" media="screen" href="{% static 'mana/css/main.css' %}" />
+    <link href="https://fonts.googleapis.com/css?family=Quicksand" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
+
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+
+
+    <!-- Always get the latest version -->
+<!-- Not recommended for production sites! -->
+<script src="https://cdn.jsdelivr.net/gh/cferdinandi/smooth-scroll/dist/smooth-scroll.polyfills.min.js"></script>
+
+<!-- Get minor updates and patch fixes within a major version -->
+<script src="https://cdn.jsdelivr.net/gh/cferdinandi/smooth-scroll@14/dist/smooth-scroll.polyfills.min.js"></script>
+
+<!-- Get patch fixes within a minor version -->
+<script src="https://cdn.jsdelivr.net/gh/cferdinandi/smooth-scroll@14.0/dist/smooth-scroll.polyfills.min.js"></script>
+
+<!-- Get a specific version -->
+<script src="https://cdn.jsdelivr.net/gh/cferdinandi/smooth-scroll@14.0.0/dist/smooth-scroll.polyfills.min.js"></script>
+
+
+</head>
+<body>
+    <header> 
+        <h2> <a href="index.html"> MANA </a></h2>
+        <nav>
+        <li><a href="#computers"> Компьютеры и залы </a></li>
+        <li><a href="#news"> Новости </a></li>
+        <li><a href="#contact"> Контакты </a></li>
+
+        <a class="sign" href="signin.html"> Вход </a> 
+        <a class="sign" href="signup.html"> Регистрация </a>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <div class="background"></div>
+        <div class="content">
+        <h1> MANA | Компьютерный клуб </h1>    
+        <h3>Удобство гостей - наш основной приоритет </h3>
+        <a class="btn" href="booking.html"> Забронировать </a>
+        </div>
+    </section>
+    <section class="destinations" id="projects">
+            <h3 class="title">О нас </h3>
+            <p> Добро пожаловать на сайт компьютерного клуба Mana! Мы предлагаем современное игровое пространство, где вы можете насладиться качественными игровыми компьютерами и консолями. Присоединяйтесь к нам и окунитесь в мир киберспорта и компьютерных развлечений вместе с Mana!  </p>
+            <hr>
+        
+            <ul class="grid">
+              <li class="small" style="background-image: url('{% static 'mana/imgs/about1.jpg' %}');"></li>
+              <li class="large" style="background-image: url('{% static 'mana/imgs/about2.jpg' %}');"></li>
+              <li class="large" style="background-image: url('{% static 'mana/imgs/about3.jpg' %}');"></li>
+              <li class="small" style="background-image: url('{% static 'mana/imgs/about4.jpg' %}');"></li>
+            </ul>
+          </section>
+          
+          <section class="packages" id="computers">
+            
+              <h1>Характеристики компьютеров</h1>
+          
+          <main>
+              <div class="computer-container">
+                  <div class="computer">
+                      <img src="{% static 'mana/imgs/def.jpg' %}" alt="Обычный зал">
+                      <h2>Обычный зал</h2>
+                      <p>Процессор: Intel Core i5</p>
+                      <p>Оперативная память: 8 ГБ</p>
+                      <p>Жесткий диск: 500 ГБ HDD</p>
+                      <p>Видеокарта: NVIDIA GeForce GTX 1050</p>
+                      <p class="price">Цена: 100 руб./час</p>
+                  </div>
+                  <div class="computer">
+                      <img src="{% static 'mana/imgs/vip.jpg' %}" alt="VIP зал">
+                      <h2>VIP зал</h2>
+                      <p>Процессор: Intel Core i7</p>
+                      <p>Оперативная память: 16 ГБ</p>
+                      <p>Жесткий диск: 1 ТБ SSD</p>
+                      <p>Видеокарта: NVIDIA GeForce RTX 3060</p>
+                      <p class="price">Цена: 150 руб./час</p>
+                  </div>
+                  <div class="computer">
+                      <img src="{% static 'mana/imgs/premium.jpg' %}" alt="Премиум зал">
+                      <h2>Премиум зал</h2>
+                      <p>Процессор: Intel Core i9</p>
+                      <p>Оперативная память: 32 ГБ</p>
+                      <p>Жесткий диск: 2 ТБ SSD</p>
+                      <p>Видеокарта: NVIDIA GeForce RTX 3080</p>
+                      <p class="price">Цена: 200 руб./час</p>
+                  </div>
+              </div>
+          </main>
+          </section>
+
+          <section class="testimonials" id = "news">
+                <h3 class="title">Новости </h3>
+                <hr>
+                <main>
+                  <div class="news-container">
+                      <div class="news">
+                        <a href="">
+                          <img src="{% static 'mana/imgs/news1.jpg' %}" alt="Новость 1">
+                          <h2>😃Однозначно халява!</h2>
+                          <p class="date">Дата: 1 апреля 2024 г.</p>
+                          <p>🤩Спешим напомнить что в MANA есть ночные пакеты! Что это такое?
+                            Сейчас объясним!
+                            
+                            🤨Один час в MANA стоит 100 рублей! Так? Все всерно!
+                            Получается 10 часов стоит 1000 рублей! Если мы все правильно понимаем!</p>
+                          </a>
+                      </div>
+                      <div class="news">
+                        <a href="">
+                          <img src="{% static 'mana/imgs/news2.jpg' %}" alt="Новость 2">
+                          <h2>Заголовок новости 2</h2>
+                          <p class="date">Дата: 2 апреля 2024 г.</p>
+                          <p>Краткое описание новости 2. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p></a>
+                      </div>
+
+                      <a href=""><div class="news">
+                        <a href="">
+                          <img src="{% static 'mana/imgs/news3.jpg' %}" alt="Новость 3">
+                          <h2>Заголовок новости 3</h2>
+                          <p class="date">Дата: 3 апреля 2024 г.</p>
+                          <p>Краткое описание новости 3. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
+                        </a>
+                      </div></a>
+                  </div>
+              </main>
+              </section>
+            
+              <section class="contact" id = "contact">
+                <h3 class="title">Обратная связь</h3>
+                <p> Оставьте ваш номер телефона, и наш администратор свяжется с вами в ближайшее время. Мы готовы ответить на все ваши вопросы и предоставить необходимую информацию по телефону. </p>
+                <hr>
+                <form>
+                  <input type="" placeholder="Номер телефона">
+                  <a href="#" class="btn">Отправить</a>
+                </form>
+              </section>
+              
+              <main>
+                
+                <section class="booking">
+                    <h2>Адреса клубов:</h2>
+                    <ul>
+                        <li>📱 Ленина 101А: +7 (922) 900-01-80</li>
+                        <li>📱 Мостовицкая 7: +7 (922) 663-03-39</li>
+                        <li>📱 Риммы Юровской 2А: +7 (922) 920-32-22</li>
+                    </ul>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <div style="position:relative;overflow:hidden;"><a href="https://yandex.ru/maps/46/kirov/search/Mana/?utm_medium=mapframe&utm_source=maps" style="color:#eee;font-size:12px;position:absolute;top:0px;">Mana в Кирове</a><a href="https://yandex.ru/maps/46/kirov/?utm_medium=mapframe&utm_source=maps" style="color:#eee;font-size:12px;position:absolute;top:14px;">Киров</a><iframe src="https://yandex.ru/map-widget/v1/?display-text=Mana&ll=49.638663%2C58.579773&mode=search&sll=49.668019%2C58.603595&sspn=0.493011%2C0.143167&text=%7B%22text%22%3A%22Mana%22%2C%22what%22%3A%5B%7B%22attr_name%22%3A%22chain_id%22%2C%22attr_values%22%3A%5B%2259803395402%22%5D%7D%5D%7D&z=14" width="1560" height="700" frameborder="1" allowfullscreen="true" style="position:relative;"></iframe></div>
+                </section>
+            </main>
+
+              <footer id="footer">
+                <p>КОМПЬЮТЕРНЫЙ КЛУБ MANA</p>
+                <p>© Copyright All Rights Reserved</a></p>
+                <ul>
+                  <p>+7 (922) 900-01-80</a></p>
+                  <li><a href="https://vk.com/mana_kirov"><i class="fab fa-vk fa-2x"></i></a></li>
+                  <li><a href="https://t.me/mana_kirov"><i class="fab fa-telegram fa-2x"></i></a></li>
+                  <li><a href="https://vk.com/away.php?to=https%3A%2F%2Fwww.twitch.tv%2Fmana_off"><i class="fab fa-twitch fa-2x"></i></a></li>
+                  <li><a href="https://discord.gg/A8pYcmUvqf"><i class="fab fa-discord fa-2x"></i></a></li>
+                </ul>
+              </footer>
+
+
+              <script>
+                    var scroll = new SmoothScroll('a[href*="#contact"]' , { 
+                        speed: 2000 , 
+                    });
+                    var scroll = new SmoothScroll('a[href*="#news"]' , { 
+                        speed: 2000 , 
+                    });
+                    var scroll = new SmoothScroll('a[href*="#computers"]' , { 
+                        speed: 2000 , 
+                    });
+                </script>
+
+</body>
+</html>
