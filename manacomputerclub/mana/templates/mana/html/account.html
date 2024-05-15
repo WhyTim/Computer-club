@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html>
 <head>
@@ -6,10 +7,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Mana - личный кабинет</title>
     <head>
-      <link rel="icon" type="image/jpg" href="imgs/logo.jpg"/> 
+      <link rel="icon" type="image/jpg" href="{% static 'mana/imgs/logo.jpg' %}"/> 
     </head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" media="screen" href="css/account.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="{% static 'mana/css/account.css' %}" />
     <link href="https://fonts.googleapis.com/css?family=Quicksand" rel="stylesheet">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
 
@@ -33,15 +34,17 @@
 </head>
 <body>
     <header> 
-        <h2> <a href="index.html"> MANA </a></h2>
+        <h2> <a href="{% url 'home' %}"> MANA </a></h2>
         <nav>
-            <li><a href="services.html"> Услуги и компьютеры </a></li>
-            <li><a href="news.html"> Новости </a></li>
-            <li><a href="contacts.html"> Контакты </a></li>
-        <li><a class="order" href="booking.html"> Забронировать </a></li>
-        <li><a class="account" href="account.html"> Личный кабинет </a></li>
+        <li><a href="{% url 'services' %}"> Услуги и компьютеры </a></li>
+        <li><a href="{% url 'news' %}"> Новости </a></li>
+        <li><a href="{% url 'about' %}"> Контакты </a></li>
+        <li><a class="order" href="{% url 'booking' %}"> Забронировать </a></li>
+        <li><a class="account" href="{% url 'account' %}"> Личный кабинет </a></li>
         </nav>
     </header>
+
+
 <li><a class="order" href="booking.html"> Забронировать </a></li>
         <li><a class="account" href="account.html"> Личный кабинет </a></li>
     <main>
