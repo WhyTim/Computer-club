@@ -40,8 +40,15 @@
         <li><a href="{% url 'services' %}"> Услуги и компьютеры </a></li>
         <li><a href="{% url 'news' %}"> Новости </a></li>
         <li><a href="{% url 'about' %}"> Контакты </a></li>
-        <li><a class="sign" href="{% url 'users:register' %}"> Регистрация </a></li>
-        <li><a class="sign" href="{% url 'users:login' %}"> Вход </a></li>
+        <li><a class="order" href="{% url 'booking' %}"> Забронировать </a></li>
+        {% if user.is_authenticated %}
+          <li><a class="account" href="{% url 'account' %}"> Личный кабинет </a></li>
+          <li class="account"> {{ user }} </li>
+          <li><a class="account" href="{% url 'users:logout' %}"> Выйти </a></li>
+        {% else %}
+          <li><a class="sign" href="{% url 'users:register' %}"> Регистрация </a></li>
+          <li><a class="sign" href="{% url 'users:login' %}"> Вход </a></li>
+        {% endif %}
         </nav>
       </header>
 

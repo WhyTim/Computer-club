@@ -1,9 +1,9 @@
 {% load static %}
 <!DOCTYPE html>
-<html>
+<html lang="ru">
 <head>
     
-    <meta charset="utf-8" />
+    <meta charset="utf-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Mana - регистрация</title>
     <head>
@@ -46,14 +46,27 @@
 
     <div class="login-container">
       <h1>Регистрация</h1>
-      <form action="">
+      <form method="post">
+        {% csrf_token %}
+        <input type="hidden" name="next" value="{{ next }}" />
+        <div class="form-error">{{ form.non_field_errors }}</div>
+        {% for f in form %}
+        <p>{{ f }}</p>
+        <div class="form-error">{{ f.errors }}</div>
+        {% endfor %}
+        <p><button type="submit">Регистрация</button></p>
+        <p>Уже зарегистрированы? <a href="{% url 'users:login' %}" class = "help">Войдите</a></p>
+      </form>
+
+      {% comment %} <form action="" method="post">
+          {% csrf_token %}
           <input type="text" name="name" placeholder="Имя">
           <input type="text" name="email" placeholder="Почта">
           <input type="text" name="login" placeholder="Логин">
           <input type="password" name="password" placeholder="Пароль">
           <button type="submit">Зарегистрироваться</button>
           <p>Уже зарегистрированы? <a href="{% url 'users:login' %}" class = "help">Войдите</a></p>
-      </form>
+      </form> {% endcomment %}
   </div>
 
     <footer id="contact">

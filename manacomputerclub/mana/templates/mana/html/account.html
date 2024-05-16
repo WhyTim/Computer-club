@@ -41,6 +41,10 @@
         <li><a href="{% url 'about' %}"> Контакты </a></li>
         <li><a class="order" href="{% url 'booking' %}"> Забронировать </a></li>
         <li><a class="account" href="{% url 'account' %}"> Личный кабинет </a></li>
+        {% if user.is_authenticated %}
+            <li class="account"> {{ user }} </li>
+            <li><a class="account" href="{% url 'users:logout' %}"> Выйти </a></li>
+        {% endif %}
         </nav>
     </header>
 

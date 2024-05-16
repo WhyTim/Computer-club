@@ -1,3 +1,4 @@
+from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, HttpResponseNotFound, Http404
 from django.shortcuts import render, redirect
 from django.urls import reverse, reverse_lazy
@@ -32,19 +33,16 @@ def news(request):
 def about(request):
     return render(request, 'mana/html/about.html')
 
-
-def register(request):
-    return render(request, 'mana/html/signup.html')
-
-
 # def login(request):
 #     return render(request, 'mana/html/signin.html')
 
 
+@login_required
 def booking(request):
     return render(request, 'mana/html/booking.html')
 
 
+@login_required
 def account(request):
     return render(request, 'mana/html/account.html')
 

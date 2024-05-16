@@ -1,6 +1,6 @@
 {% load static %}
 <!DOCTYPE html>
-<html lang="ru">
+<html>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,7 +8,7 @@
     <head>
         <link rel="icon" type="image/jpg" href="{% static 'mana/imgs/logo.jpg' %}"/> 
     </head>
-    <link rel="stylesheet" href="{% static 'mana/css/booking.css' %}"> <!-- Подключение файла стилей -->
+    <link rel="stylesheet" href="{% static 'mana/css/order.css' %}"> <!-- Подключение файла стилей -->
     <link href="https://fonts.googleapis.com/css?family=Quicksand" rel="stylesheet">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
 
@@ -24,9 +24,11 @@
         <li><a href="{% url 'about' %}"> Контакты </a></li>
         <li><a class="order" href="{% url 'booking' %}"> Забронировать </a></li>
         <li><a class="account" href="{% url 'account' %}"> Личный кабинет </a></li>
+        <li class="account">{{ user }}</li>
+        <li><a class="account" href="{% url 'users:logout' %}"> Выйти </a></li>
         </nav>
     </header>
-    
+     
     <h1>Бронирование компьютеров</h1>
     <div class="form-container">
         <form id="booking-form">

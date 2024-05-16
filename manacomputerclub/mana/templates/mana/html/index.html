@@ -39,8 +39,14 @@
         <li><a href="{% url 'services' %}"> Компьютеры и залы </a></li>
         <li><a href="{% url 'news' %}"> Новости </a></li>
         <li><a href="{% url 'about' %}"> Контакты </a></li>
-        <a class="sign" href="{% url 'users:register' %}"> Регистрация </a>
-        <a class="sign" href="{% url 'users:login' %}"> Вход </a> 
+        {% if user.is_authenticated %}
+          <li><a class="account" href="{% url 'account' %}"> {{ user }} </a></li>
+          <li><a class="account" href="{% url 'users:logout' %}"> Выйти </a></li>
+        {% else %}
+          <a class="sign" href="{% url 'users:register' %}"> Регистрация </a>
+          <a class="sign" href="{% url 'users:login' %}"> Вход </a> 
+        {% endif %}
+        
         
         </nav>
     </header>
