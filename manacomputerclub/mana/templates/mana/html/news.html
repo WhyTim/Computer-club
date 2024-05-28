@@ -17,20 +17,6 @@
     <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
 
 
-    <!-- Always get the latest version -->
-<!-- Not recommended for production sites! -->
-<script src="https://cdn.jsdelivr.net/gh/cferdinandi/smooth-scroll/dist/smooth-scroll.polyfills.min.js"></script>
-
-<!-- Get minor updates and patch fixes within a major version -->
-<script src="https://cdn.jsdelivr.net/gh/cferdinandi/smooth-scroll@14/dist/smooth-scroll.polyfills.min.js"></script>
-
-<!-- Get patch fixes within a minor version -->
-<script src="https://cdn.jsdelivr.net/gh/cferdinandi/smooth-scroll@14.0/dist/smooth-scroll.polyfills.min.js"></script>
-
-<!-- Get a specific version -->
-<script src="https://cdn.jsdelivr.net/gh/cferdinandi/smooth-scroll@14.0.0/dist/smooth-scroll.polyfills.min.js"></script>
-
-
 </head>
 <body>
     <body>
@@ -53,7 +39,9 @@
       </header>
 
     <section>
+        
         <h1>Новости. Страница в разработке</h1>
+        
         <ul class="list-articles">
           {% for n in news %}
           {% comment %} {% if n.is_published %} {% endcomment %}
@@ -61,6 +49,10 @@
             {% autoescape off %}
             {{n.content|linebreaks|truncatewords:40}}
             {% endautoescape %}
+            {% if n.photo %}
+              <img class="" src="{{ n.photo.url }}"></p>
+            {% endif %}
+            
               <div class="clear"></div>
               <p class="link-read-post"><a href="news/{{ n.id }}">Читать новость</a></p>
               </li>

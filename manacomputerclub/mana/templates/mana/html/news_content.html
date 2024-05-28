@@ -41,6 +41,9 @@
         {% comment %} <h1>Новости. Страница в разработке</h1> {% endcomment %}
         <p>{{ news.title }}</p>
         <p>{{ news.content }}</p>
+        {% if news.photo %}
+          <p><img class="img-article-left" src="{{news.photo.url}}"></p>
+        {% endif %}
     </section>
 
     <footer id="contact">

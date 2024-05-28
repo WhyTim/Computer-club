@@ -16,9 +16,11 @@ menu = [{'title': "Услуги и компьютеры", 'url_name': 'services'
 
 # request содержит информацию о сессияк, куки этого HttpRequest
 def index(request): 
-    # t = render_to_string('mana/html/index.html')
-    # return HttpResponse(t)
-    return render(request, 'mana/html/index.html')
+    news = News.objects.filter(is_published=1)
+    data = {
+        'news': news,
+    }
+    return render(request, 'mana/html/index.html', data)
 
 
 def services(request):
@@ -32,7 +34,6 @@ def news(request):
         'title': 'Главная страница',
         'menu': menu,
         'news': news,
-        'cat_selected': 0,
     }
     return render(request, 'mana/html/news.html', context=data)
 

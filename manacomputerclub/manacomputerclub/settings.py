@@ -128,3 +128,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 LOGIN_REDIRECT_URL = "account"
 LOGOUT_REDIRECT_URL = "home"
 LOGIN_URL = 'users:login'
+
+MEDIA_ROOT = BASE_DIR / 'media'  # для загрузки
+
+MEDIA_URL = '/media/'

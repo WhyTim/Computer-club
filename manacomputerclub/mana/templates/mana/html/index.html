@@ -110,40 +110,34 @@
           </section>
 
           <section class="testimonials" id = "news">
+              
                 <h3 class="title">Новости </h3>
                 <hr>
                 <main>
-                  <div class="news-container">
-                      <div class="news">
-                        <a href="">
-                          <img src="{% static 'mana/imgs/news1.jpg' %}" alt="Новость 1">
-                          <h2>😃Однозначно халява!</h2>
-                          <p class="date">Дата: 1 апреля 2024 г.</p>
-                          <p>🤩Спешим напомнить что в MANA есть ночные пакеты! Что это такое?
-                            Сейчас объясним!
-                            
-                            🤨Один час в MANA стоит 100 рублей! Так? Все всерно!
-                            Получается 10 часов стоит 1000 рублей! Если мы все правильно понимаем!</p>
-                          </a>
-                      </div>
-                      <div class="news">
-                        <a href="">
-                          <img src="{% static 'mana/imgs/news2.jpg' %}" alt="Новость 2">
-                          <h2>Заголовок новости 2</h2>
-                          <p class="date">Дата: 2 апреля 2024 г.</p>
-                          <p>Краткое описание новости 2. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p></a>
-                      </div>
 
-                      <a href=""><div class="news">
-                        <a href="">
-                          <img src="{% static 'mana/imgs/news3.jpg' %}" alt="Новость 3">
-                          <h2>Заголовок новости 3</h2>
-                          <p class="date">Дата: 3 апреля 2024 г.</p>
-                          <p>Краткое описание новости 3. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
+                  <div class="news-container">
+                      {% for n in news|slice:":3" %}
+                        <div class="news">
+                        <a href="news/{{ n.id }}">
+                          {% if n.photo %}
+                            <img class="" src="{{ n.photo.url }}"></p>
+                          {% endif %} 
+                          <h2>{{n.title}}</h2>
+                          <p class="date"></p>
+                          <p>
+                            {% autoescape off %}
+                            {{n.content|linebreaks|truncatewords:40}}
+                            {% endautoescape %}
+                          </p>
                         </a>
-                      </div></a>
+                      </div>
+                      {% endfor %}
                   </div>
+                  
               </main>
+              <div class="button-container">
+                <a href="news" class="news-button">Перейти к новостям</a>
+              </div>
               </section>
             
               <section class="contact" id = "contact">
