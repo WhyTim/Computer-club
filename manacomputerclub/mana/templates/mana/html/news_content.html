@@ -1,63 +1,109 @@
 {% load static %}
 <!DOCTYPE html>
 <html>
-<head>
-    
+  <head>
     <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <title>Mana - новости</title>
     <head>
-      <link rel="icon" type="image/jpg" href="{% static 'mana/imgs/logo.jpg' %}"/> 
+      <link
+        rel="icon"
+        type="image/jpg"
+        href="{% static 'mana/imgs/logo.jpg' %}"
+      />
     </head>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" media="screen" href="{% static 'mana/css/sign.css' %}" />
-    <link href="https://fonts.googleapis.com/css?family=Quicksand" rel="stylesheet">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      media="screen"
+      href="{% static 'mana/css/news_content.css' %}"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Quicksand"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://use.fontawesome.com/releases/v5.1.0/css/all.css"
+      integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt"
+      crossorigin="anonymous"
+    />
 
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
-
-</head>
-<body>
+    <link
+      href="https://fonts.googleapis.com/css?family=Open+Sans"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
     <body>
-      <header> 
-        <h2> <a href="{% url 'home' %}"> MANA </a></h2>
+      <header>
+        <h2><a href="{% url 'home' %}"> MANA </a></h2>
         <nav>
-        <li><a href="{% url 'services' %}"> Услуги и компьютеры </a></li>
-        <li><a href="{% url 'news' %}"> Новости </a></li>
-        <li><a href="{% url 'about' %}"> Контакты </a></li>
-        <li><a class="order" href="{% url 'booking' %}"> Забронировать </a></li>
-        {% if user.is_authenticated %}
-          <li><a class="account" href="{% url 'account' %}"> Личный кабинет </a></li>
-          <li class="account"> {{ user }} </li>
-          <li><a class="account" href="{% url 'users:logout' %}"> Выйти </a></li>
-        {% else %}
-          <li><a class="sign" href="{% url 'users:register' %}"> Регистрация </a></li>
+          <li><a href="{% url 'services' %}"> Услуги и компьютеры </a></li>
+          <li><a href="{% url 'news' %}"> Новости </a></li>
+          <li><a href="{% url 'about' %}"> Контакты </a></li>
+          <li>
+            <a class="order" href="{% url 'booking' %}"> Забронировать </a>
+          </li>
+          {% if user.is_authenticated %}
+          <li>
+            <a class="account" href="{% url 'account' %}"> Личный кабинет </a>
+          </li>
+          <li class="account">{{ user }}</li>
+          <li>
+            <a class="account" href="{% url 'users:logout' %}"> Выйти </a>
+          </li>
+          {% else %}
+          <li>
+            <a class="sign" href="{% url 'users:register' %}"> Регистрация </a>
+          </li>
           <li><a class="sign" href="{% url 'users:login' %}"> Вход </a></li>
-        {% endif %}
+          {% endif %}
         </nav>
       </header>
 
-    <section>
-        {% comment %} <h1>Новости. Страница в разработке</h1> {% endcomment %}
-        <p>{{ news.title }}</p>
-        <p>{{ news.content }}</p>
+      <section>
+        <h1>{{ news.title }}</h1>
+        <p class="date">{{ news.time_create|date:"d-m-Y H:i" }}</p>
+        <p>
+        {% autoescape off %}
+          {{ news.content|linebreaks }}
+        {% endautoescape %}
+        </p>
         {% if news.photo %}
-          <p><img class="img-article-left" src="{{news.photo.url}}"></p>
+        <p><img class="news-photo" src="{{news.photo.url}}" /></p></p>
         {% endif %}
-    </section>
+      </section>
 
-    <footer id="contact">
-      <p>КОМПЬЮТЕРНЫЙ КЛУБ MANA</p>
-      <p>© Copyright All Rights Reserved</a></p>
-      <ul>
-        <p>+7 (922) 900-01-80</a></p>
-        <li><a href="https://vk.com/mana_kirov"><i class="fab fa-vk fa-2x"></i></a></li>
-        <li><a href="https://t.me/mana_kirov"><i class="fab fa-telegram fa-2x"></i></a></li>
-        <li><a href="https://vk.com/away.php?to=https%3A%2F%2Fwww.twitch.tv%2Fmana_off"><i class="fab fa-twitch fa-2x"></i></a></li>
-        <li><a href="https://discord.gg/A8pYcmUvqf"><i class="fab fa-discord fa-2x"></i></a></li>
-      </ul>
-    </footer>
-
-
-</body>
+      <footer id="contact">
+        <p>КОМПЬЮТЕРНЫЙ КЛУБ MANA</p>
+        <p>© Copyright All Rights Reserved</p>
+        <ul>
+          <p>+7 (922) 900-01-80</p>
+          <li>
+            <a href="https://vk.com/mana_kirov"
+              ><i class="fab fa-vk fa-2x"></i
+            ></a>
+          </li>
+          <li>
+            <a href="https://t.me/mana_kirov"
+              ><i class="fab fa-telegram fa-2x"></i
+            ></a>
+          </li>
+          <li>
+            <a
+              href="https://vk.com/away.php?to=https%3A%2F%2Fwww.twitch.tv%2Fmana_off"
+              ><i class="fab fa-twitch fa-2x"></i
+            ></a>
+          </li>
+          <li>
+            <a href="https://discord.gg/A8pYcmUvqf"
+              ><i class="fab fa-discord fa-2x"></i
+            ></a>
+          </li>
+        </ul>
+      </footer>
+    </body>
+  </body>
 </html>
