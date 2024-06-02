@@ -6,7 +6,7 @@ from django.template.loader import render_to_string
 from django.contrib.auth.views import LoginView
 from django.contrib.auth.forms import AuthenticationForm
 
-from mana.models import News
+from mana.models import News, Services
 
 menu = [{'title': "Услуги и компьютеры", 'url_name': 'services'},
         {'title': "Новости", 'url_name': 'news'},
@@ -24,7 +24,9 @@ def index(request):
 
 
 def services(request):
-    return render(request, 'mana/html/services.html')
+    services = Services.objects.all()
+
+    return render(request, 'mana/html/services.html', {'services': services})
 
 
 def news(request):
@@ -61,9 +63,9 @@ def about(request):
 #     return render(request, 'mana/html/signin.html')
 
 
-@login_required
-def booking(request):
-    return render(request, 'mana/html/booking.html')
+# @login_required
+# def booking(request):
+#     return render(request, 'mana/html/booking.html')
 
 
 @login_required

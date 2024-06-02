@@ -1,14 +1,8 @@
 from django.contrib import admin
+from .models import *
 
-from booking.models import Booking, BookingSettings
-
-
-@admin.register(Booking)
+# Register your models here.
+@admin.register(Order)
 class BookingAdmin(admin.ModelAdmin):
-    list_display = ("user_email", "user_name", "date", "time", "approved")
-    list_filter = ("approved", "date")
-    ordering = ("date", "time")
-    search_fields = ("user_email", "user_name")
-
-
-admin.site.register(BookingSettings)
+    list_display = ("time_ordered", "day", "time", "club", "total_sum", "num_computers")
+    ordering = ("-time_ordered",)

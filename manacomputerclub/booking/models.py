@@ -1,53 +1,43 @@
-from django.conf import settings
 from django.db import models
+from datetime import datetime
+from django.contrib.auth.models import User
+from mana.models import Computers, Services
 
-BOOKING_PERIOD = (
-    ("5", "5M"),
-    ("10", "10M"),
-    ("15", "15M"),
-    ("20", "20M"),
-    ("25", "25M"),
-    ("30", "30M"),
-    ("35", "35M"),
-    ("40", "40M"),
-    ("45", "45M"),
-    ("60", "1H"),
-    ("75", "1H 15M"),
-    ("90", "1H 30M"),
-    ("105", "1H 45M"),
-    ("120", "2H"),
-    ("150", "2H 30M"),
-    ("180", "3H"),
+ADRESS_CHOICES = (
+    ("Мостовицкая 7", "Мостовицкая 7"),
+    ("Ленина 101А", "Ленина 101А"),
+    ("Риммы Юровской 2А", "Риммы Юровской 2А"),
+    )
+
+TIME_CHOICES = (
+    ("3:00", "3:00"),
+    ("3:30 PM", "3:30 PM"),
+    ("4 PM", "4 PM"),
+    ("4:30 PM", "4:30 PM"),
+    ("5 PM", "5 PM"),
+    ("5:30 PM", "5:30 PM"),
+    ("6 PM", "6 PM"),
+    ("6:30 PM", "6:30 PM"),
+    ("7 PM", "7 PM"),
+    ("7:30 PM", "7:30 PM"),
 )
 
+class Order(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
+    club = models.CharField(max_length=50, choices=ADRESS_CHOICES, default="Мостовицкая 7", verbose_name="Адрес клуба")
+    day = models.DateField(default=datetime.now, verbose_name="Дата посещения")
+    time = models.TimeField(verbose_name="Время посещения")
+    duration = models.CharField(max_length=20,default='60', verbose_name="Длительность посещения")
+    time_ordered = models.DateTimeField(default=datetime.now, blank=True, verbose_name="Дата и время заказа")
+    computers = models.ManyToManyField(Computers, blank=True)
+    services = models.ManyToManyField(Services, blank=True)
+    count_services = models.CharField(max_length=20,default='1')
+    num_computers = models.PositiveIntegerField(default=1, verbose_name="Количество компьютеров")
+    total_sum = models.DecimalField(max_digits=10, decimal_places=2, default=0.00, verbose_name="Сумма заказа")
 
-class Booking(models.Model):
-    user = models.ForeignKey(settings.AUTH_USER_MODEL,
-                             on_delete=models.CASCADE, blank=True, null=True)
-    date = models.DateField()
-    time = models.TimeField()
-    user_name = models.CharField(max_length=250)
-    user_email = models.EmailField()
-    approved = models.BooleanField(default=False)
-    user_mobile = models.CharField(blank=True, null=True, max_length=10)
-
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
-
-    def __str__(self) -> str:
-        return self.user_name or "(No Name)"
-
-
-class BookingSettings(models.Model):
-    # General
-    booking_enable = models.BooleanField(default=True)
-    confirmation_required = models.BooleanField(default=True)
-    # Date
-    disable_weekend = models.BooleanField(default=True)
-    available_booking_months = models.IntegerField(default=1, help_text="if 2, user can only book booking for next two months.")
-    max_booking_per_day = models.IntegerField(null=True, blank=True)
-    # Time
-    start_time = models.TimeField()
-    end_time = models.TimeField()
-    period_of_each_booking = models.CharField(max_length=3, default="30", choices=BOOKING_PERIOD, help_text="How long each booking take.")
-    max_booking_per_time = models.IntegerField(default=1, help_text="how much booking can be book for each time.")
+    def __str__(self):
+        return f"day: {self.day} | time: {self.time}"
+    
+    class Meta:
+        verbose_name = 'Заказ'
+        verbose_name_plural = "Заказы"

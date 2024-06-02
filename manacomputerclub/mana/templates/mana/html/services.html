@@ -42,7 +42,9 @@
         <li><a href="{% url 'services' %}"> Услуги и компьютеры </a></li>
         <li><a href="{% url 'news' %}"> Новости </a></li>
         <li><a href="{% url 'about' %}"> Контакты </a></li>
-        <li><a class="order" href="{% url 'booking' %}"> Забронировать </a></li>
+        <li>
+          <a class="order" href="{% url 'booking:order' %}"> Забронировать </a>
+        </li>
         {% if user.is_authenticated %}
         <li>
           <a class="account" href="{% url 'account' %}"> Личный кабинет </a>
@@ -57,42 +59,108 @@
         {% endif %}
       </nav>
     </header>
-
-    <section class="packages" id="computers">
-      <h1>Характеристики компьютеров</h1>
-
-      <main>
-        <div class="computer-container">
-          <div class="computer">
-            <img src="{% static 'mana/imgs/def.jpg' %}" alt="Обычный зал" />
-            <h2>Обычный зал</h2>
-            <p>Процессор: Intel Core i5</p>
-            <p>Оперативная память: 8 ГБ</p>
-            <p>Жесткий диск: 500 ГБ HDD</p>
-            <p>Видеокарта: NVIDIA GeForce GTX 1050</p>
-            <p class="price">Цена: 100 руб./час</p>
-          </div>
-          <div class="computer">
-            <img src="{% static 'mana/imgs/vip.jpg' %}" alt="VIP зал" />
-            <h2>VIP зал</h2>
-            <p>Процессор: Intel Core i7</p>
-            <p>Оперативная память: 16 ГБ</p>
-            <p>Жесткий диск: 1 ТБ SSD</p>
-            <p>Видеокарта: NVIDIA GeForce RTX 3060</p>
-            <p class="price">Цена: 150 руб./час</p>
-          </div>
-          <div class="computer">
-            <img src="{% static 'mana/imgs/premium.jpg' %}" alt="Премиум зал" />
-            <h2>Премиум зал</h2>
-            <p>Процессор: Intel Core i9</p>
-            <p>Оперативная память: 32 ГБ</p>
-            <p>Жесткий диск: 2 ТБ SSD</p>
-            <p>Видеокарта: NVIDIA GeForce RTX 3080</p>
-            <p class="price">Цена: 200 руб./час</p>
-          </div>
+    <div class="content">
+      <h1 class="price">Цены на услуги</h1>
+      <div class="services">
+        <div class="room">
+          <h2>Обычный зал</h2>
+          <table>
+            <thead>
+              <tr>
+                <th>Наименование услуги</th>
+                <th>Цена (руб.)</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for service in services %}
+              <tr>
+                {% if service.room == "default" %}
+                <td>{{ service.title }}</td>
+                <td>{{ service.sum }}</td>
+                {% endif %}
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
         </div>
-      </main>
-    </section>
+        <div class="room">
+          <h2>Вип зал</h2>
+          <table>
+            <thead>
+              <tr>
+                <th>Наименование услуги</th>
+                <th>Цена (руб.)</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for service in services %}
+              <tr>
+                {% if service.room == "vip" %}
+                <td>{{ service.title }}</td>
+                <td>{{ service.sum }}</td>
+                {% endif %}
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+        <div class="room">
+          <h2>Премиум зал</h2>
+          <table>
+            <thead>
+              <tr>
+                <th>Наименование услуги</th>
+                <th>Цена (руб.)</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for service in services %}
+              <tr>
+                {% if service.room == "premium" %}
+                <td>{{ service.title }}</td>
+                <td>{{ service.sum }}</td>
+                {% endif %}
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <h1 class="price">Характеристики компьютеров</h1>
+      <section class="packages" id="computers">
+        <main>
+          <div class="computer-container">
+            <div class="computer">
+              <img src="{% static 'mana/imgs/def.jpg' %}" alt="Обычный зал" />
+              <h2>Обычный зал</h2>
+              <p>Процессор: Intel Core i5</p>
+              <p>Оперативная память: 8 ГБ</p>
+              <p>Жесткий диск: 500 ГБ HDD</p>
+              <p>Видеокарта: NVIDIA GeForce GTX 1050</p>
+            </div>
+            <div class="computer">
+              <img src="{% static 'mana/imgs/vip.jpg' %}" alt="VIP зал" />
+              <h2>Вип зал</h2>
+              <p>Процессор: Intel Core i7</p>
+              <p>Оперативная память: 16 ГБ</p>
+              <p>Жесткий диск: 1 ТБ SSD</p>
+              <p>Видеокарта: NVIDIA GeForce RTX 3060</p>
+            </div>
+            <div class="computer">
+              <img
+                src="{% static 'mana/imgs/premium.jpg' %}"
+                alt="Премиум зал"
+              />
+              <h2>Премиум зал</h2>
+              <p>Процессор: Intel Core i9</p>
+              <p>Оперативная память: 32 ГБ</p>
+              <p>Жесткий диск: 2 ТБ SSD</p>
+              <p>Видеокарта: NVIDIA GeForce RTX 3080</p>
+            </div>
+          </div>
+        </main>
+      </section>
+    </div>
 
     <footer id="contact">
       <p>КОМПЬЮТЕРНЫЙ КЛУБ MANA</p>

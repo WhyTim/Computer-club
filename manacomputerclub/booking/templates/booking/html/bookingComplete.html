@@ -2,9 +2,9 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta charset="utf-8" />
+    <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <title>Mana - контакты</title>
+    <title>Mana - бронирование</title>
     <head>
       <link
         rel="icon"
@@ -17,7 +17,7 @@
       rel="stylesheet"
       type="text/css"
       media="screen"
-      href="{% static 'mana/css/about.css' %}"
+      href="{% static 'booking/css/order.css' %}"
     />
     <link
       href="https://fonts.googleapis.com/css?family=Quicksand"
@@ -42,9 +42,7 @@
         <li><a href="{% url 'services' %}"> Услуги и компьютеры </a></li>
         <li><a href="{% url 'news' %}"> Новости </a></li>
         <li><a href="{% url 'about' %}"> Контакты </a></li>
-        <li>
-          <a class="order" href="{% url 'booking:order' %}"> Забронировать </a>
-        </li>
+        <li><a class="order" href=""> Забронировать </a></li>
         {% if user.is_authenticated %}
         <li>
           <a class="account" href="{% url 'account' %}"> Личный кабинет </a>
@@ -61,33 +59,8 @@
     </header>
 
     <section>
-      <h1>Адреса клубов:</h1>
-      <ul>
-        <li>📱 Ленина 101А: +7 (922) 900-01-80</li>
-        <li>📱 Мостовицкая 7: +7 (922) 663-03-39</li>
-        <li>📱 Риммы Юровской 2А: +7 (922) 920-32-22</li>
-      </ul>
-      <br />
-      <div style="position: relative; overflow: hidden">
-        <a
-          href="https://yandex.ru/maps/46/kirov/search/Mana/?utm_medium=mapframe&utm_source=maps"
-          style="color: #eee; font-size: 12px; position: absolute; top: 0px"
-          >Mana в Кирове</a
-        ><a
-          href="https://yandex.ru/maps/46/kirov/?utm_medium=mapframe&utm_source=maps"
-          style="color: #eee; font-size: 12px; position: absolute; top: 14px"
-          >Киров</a
-        ><iframe
-          src="https://yandex.ru/map-widget/v1/?display-text=Mana&ll=49.638663%2C58.579773&mode=search&sll=49.668019%2C58.603595&sspn=0.493011%2C0.143167&text=%7B%22text%22%3A%22Mana%22%2C%22what%22%3A%5B%7B%22attr_name%22%3A%22chain_id%22%2C%22attr_values%22%3A%5B%2259803395402%22%5D%7D%5D%7D&z=14"
-          width="1560"
-          height="700"
-          frameborder="1"
-          allowfullscreen="true"
-          style="position: relative"
-        ></iframe>
-      </div>
+    <h2>Вы успешно забронировали!</h2>
     </section>
-
     <footer id="contact">
       <p>КОМПЬЮТЕРНЫЙ КЛУБ MANA</p>
       <p>© Copyright All Rights Reserved</p>

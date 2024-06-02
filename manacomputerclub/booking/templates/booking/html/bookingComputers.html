@@ -1,0 +1,353 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Mana - бронирование</title>
+    <head>
+      <link
+        rel="icon"
+        type="image/jpg"
+        href="{% static 'mana/imgs/logo.jpg' %}"
+      />
+    </head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      media="screen"
+      href="{% static 'booking/css/bookingComputers.css' %}"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Quicksand"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://use.fontawesome.com/releases/v5.1.0/css/all.css"
+      integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt"
+      crossorigin="anonymous"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Open+Sans"
+      rel="stylesheet"
+    />
+  </head>
+
+  <body>
+    <header>
+      <h2><a href="{% url 'home' %}"> MANA </a></h2>
+      <nav>
+        <li><a href="{% url 'services' %}"> Услуги и компьютеры </a></li>
+        <li><a href="{% url 'news' %}"> Новости </a></li>
+        <li><a href="{% url 'about' %}"> Контакты </a></li>
+        <li><a class="order" href=""> Забронировать </a></li>
+        {% if user.is_authenticated %}
+        <li>
+          <a class="account" href="{% url 'account' %}"> Личный кабинет </a>
+        </li>
+        <li class="account">{{ user }}</li>
+        <li><a class="account" href="{% url 'users:logout' %}"> Выйти </a></li>
+        {% else %}
+        <li>
+          <a class="sign" href="{% url 'users:register' %}"> Регистрация </a>
+        </li>
+        <li><a class="sign" href="{% url 'users:login' %}"> Вход </a></li>
+        {% endif %}
+      </nav>
+    </header>
+
+    <div class="form-container">
+      <form id="booking-form" method="post" action="">
+        {% csrf_token %} {% comment %}
+        <label for="duration">Продолжительность (в часах):</label>
+        <input
+          type="number"
+          id="duration"
+          name="duration"
+          min="1"
+          max="24"
+          required
+        /><br /><br />
+        {% endcomment %}
+        <p>Адрес: {{ club.title }}</p>
+        <p>День: {{ day }}</p>
+        <p>Время: {{ time }}</p>
+        <p>Услуга: {{ service }}</p>
+        <p>Длительность: {{ duration }}</p>
+        <p>Стоимость услуги:</p>
+        <p name="service_price" id="service-price">{{ sum }}</p>
+        <br /><br />
+        <fieldset>
+          <legend>Выберите компьютер(ы) (максимум 5):</legend>
+          <div id="computer-grid">
+            <!-- Компьютеры будут добавлены динамически с помощью JavaScript -->
+          </div>
+        </fieldset>
+        <br />
+
+        <label for="total">Общая стоимость:</label>
+        <input type="text" id="total" name="total" readonly /><br /><br />
+
+        <label for="total">Количество выбранных компьютеров:</label>
+        <input
+          type="text"
+          id="total-computers"
+          name="total-computers"
+          readonly
+        /><br /><br />
+
+        <button type="submit" id = "submit">Забронировать</button>
+      </form>
+    </div>
+
+    <div class="summary">
+      <!-- Поле для отображения выбранных компьютеров -->
+      <div id="selected-computers" class="selected-computers"></div>
+
+      <!-- Поле для отображения итоговой стоимости -->
+      <label>Итоговая стоимость:</label>
+      <input type="text" id="total-cost" name="total-cost" readonly />
+    </div>
+    <ul id="computer-list"></ul>
+    <footer id="contact">
+      <p>КОМПЬЮТЕРНЫЙ КЛУБ MANA</p>
+      <p>© Copyright All Rights Reserved</p>
+      <ul>
+        <p>+7 (922) 900-01-80</p>
+        <li>
+          <a href="https://vk.com/mana_kirov"
+            ><i class="fab fa-vk fa-2x"></i
+          ></a>
+        </li>
+        <li>
+          <a href="https://t.me/mana_kirov"
+            ><i class="fab fa-telegram fa-2x"></i
+          ></a>
+        </li>
+        <li>
+          <a
+            href="https://vk.com/away.php?to=https%3A%2F%2Fwww.twitch.tv%2Fmana_off"
+            ><i class="fab fa-twitch fa-2x"></i
+          ></a>
+        </li>
+        <li>
+          <a href="https://discord.gg/A8pYcmUvqf"
+            ><i class="fab fa-discord fa-2x"></i
+          ></a>
+        </li>
+      </ul>
+    </footer>
+    {% comment %} src="{% static 'booking/js/script.js' %}" {% endcomment %}
+    <!-- Подключение jQuery из CDN -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script > 
+
+      // Передача JSON-данных в глобальную переменную
+      var data = JSON.parse ("{{ data | escapejs }}");
+      const availableComputers = data.computers.map(computer => ({
+          id: computer.id,
+          name: computer.title
+      }));
+      
+      let selectedComputers = [];
+
+      function populateComputerGrid() {
+        const computerGrid = document.getElementById("computer-grid");
+        computerGrid.innerHTML = ""; // Очистка сетки перед добавлением новых компьютеров
+      
+        let row;
+        let count = 0;
+      
+        availableComputers.forEach((computer) => {
+          if (count % 5 === 0) {
+            row = document.createElement("div");
+            row.classList.add("row");
+            computerGrid.appendChild(row);
+          }
+      
+          const card = document.createElement("div");
+          card.classList.add("card");
+          card.dataset.computerId = computer.id;
+      
+          const checkbox = document.createElement("input");
+          checkbox.type = "checkbox";
+          checkbox.id = "computer-checkbox-" + computer.id;
+          checkbox.classList.add("hidden-checkbox");
+          checkbox.name = "computers[]";
+          checkbox.value = computer.id;
+      
+          const label = document.createElement("label");
+          label.setAttribute("for", "computer-checkbox-" + computer.id);
+          label.textContent = computer.name;
+      
+          card.appendChild(checkbox);
+          card.appendChild(label);
+      
+          row.appendChild(card);
+      
+          count++;
+        });
+      }
+      
+      // Вызов функции для заполнения сетки компьютеров при загрузке страницы
+      populateComputerGrid();
+      
+      // Обработчик событий для клика на карточку компьютера
+      document.querySelectorAll(".card").forEach((card) => {
+        card.addEventListener("click", function (event) {
+          const checkbox = this.querySelector(".hidden-checkbox");
+          checkbox.checked = !checkbox.checked; // Переключение состояния чекбокса
+          this.classList.toggle("selected"); // Добавление или удаление класса "selected" для стилизации выбранной карточки
+      
+          // Подсчет количества выбранных компьютеров и отображение в поле
+          const selectedCount = document.querySelectorAll(".card.selected").length;
+          document.getElementById("total-computers").value = selectedCount;
+      
+          // Обновление списка выбранных компьютеров
+          updateSelectedComputers();
+      
+          // Пересчет итоговой стоимости
+          calculateTotalCost();
+      
+          // Остановка всплытия события клика, чтобы избежать переключения чекбокса при клике на текст карточки
+          event.stopPropagation();
+        });
+      
+        // Прикрепляем обработчик клика на чекбокс, чтобы он работал при клике на текст карточки
+        card
+          .querySelector(".hidden-checkbox")
+          .addEventListener("click", function (event) {
+            event.stopPropagation(); // Остановка всплытия события клика, чтобы избежать переключения чекбокса при клике на сам чекбокс
+          });
+      });
+      
+      // Функция для обновления списка выбранных компьютеров
+      function updateSelectedComputers() {
+        const selectedComputersDiv = document.getElementById("selected-computers");
+        selectedComputers = Array.from(
+          document.querySelectorAll(".card.selected")
+        ).map((card) => card.textContent);
+        selectedComputersDiv.innerHTML =
+          selectedComputers.length > 0
+            ? "<strong>Выбранные компьютеры:</strong><br>" +
+              selectedComputers
+                .map((computer) => "<li>" + computer + "</li>")
+                .join("")
+            : "";
+        
+        }
+      
+      // Функция для пересчета итоговой стоимости
+      function calculateTotalCost() {
+        
+        const servicePrice = document.getElementById('service-price').textContent;
+
+        const selectedCount = parseInt(
+          document.getElementById("total-computers").value
+        );
+      
+        // Пример расчета: стоимость = цена услуги * продолжительность * количество компьютеров
+        const totalPrice = servicePrice * selectedCount;
+      
+        // Отображение итоговой стоимости
+        document.getElementById("total-cost").value =
+          totalPrice.toFixed(2) == "NaN" ? "0" : totalPrice.toFixed(2) + " руб.";
+        
+      }
+      
+      // Функция для получения цены выбранной услуги
+      function getServicePrice(service) {
+        // Здесь можно использовать базу данных или другой источник данных для получения цен
+        const prices = {
+          basic: 100,
+          premium: 150,
+          // Добавьте остальные услуги и их цены
+        };
+        return prices[service] || 0; // Если цена не найдена, возвращаем 0
+      }
+
+      {% comment %}
+      // Обработчик событий для изменения продолжительности или выбора услуги
+      document
+        .querySelectorAll('input[name="duration"], select[name="service"]')
+        .forEach((input) => {
+          input.addEventListener("change", function () {
+            calculateTotalCost();
+          });
+        }); {% endcomment %}
+      
+      // Вызываем функцию для инициализации списка выбранных компьютеров и итоговой стоимости
+      updateSelectedComputers();
+      {% comment %} calculateTotalCost(); {% endcomment %}
+      
+      
+
+
+
+      {% comment %} function getCSRFToken() {
+        const name = 'csrftoken';
+        const cookieValue = document.cookie.split(';').find(cookie => cookie.trim().startsWith(`${name}=`));
+        if (cookieValue) {
+          return cookieValue.split('=')[1];
+        }
+        return null;
+      }
+
+      // Функция для отправки данных на сервер
+      function sendDataToServer(selectedComputers) {
+        // Создаем объект с данными для отправки
+        const data = {
+          selectedComputers: selectedComputers
+        };
+        const formData = new FormData();
+        selectedComputers.forEach(computer => {
+          formData.append('computers', computer);
+        });
+        // Отправляем данные на сервер
+        fetch('', {
+          method: 'POST',
+          body: formData,
+        })
+        .then(response => {
+            if (response.ok) {
+                console.log('Заказ успешно сохранен!');
+            } else {
+                console.error('Ошибка сохранения заказа:', response.statusText);
+            }
+        })
+        .catch(error => {
+            console.error('Ошибка при выполнении запроса:', error);
+        });
+        }
+
+      // Получаем список выбранных компьютеров
+      const selectedComputers = Array.from(
+        document.querySelectorAll(".card.selected")
+      ).map((card) => card.dataset.computerId);
+
+      // Вызываем функцию для отправки данных на сервер
+      sendDataToServer(selectedComputers); {% endcomment %}
+
+      
+      // Закидываем названия компов в views.py
+      $.ajax({
+        type: "GET",
+        url: '',
+        data: {
+            "result": JSON.stringify(selectedComputers),
+        },
+        dataType: "json",
+        success: function (data) {
+            // any process in data
+            console.log('Заказ успешно сохранен!');
+        },
+        failure: function () {
+          console.log('Заказ неуспешно сохранен!');
+        }
+      });
+
+    </script>
+  </body>
+</html>

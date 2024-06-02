@@ -9,7 +9,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('mana.urls')),
     path('users/', include('users.urls', namespace="users")),
-    path("booking2/", include("booking.urls")),
+    path("booking/", include("booking.urls", namespace="booking")),
 ]
 
 admin.site.site_header = "Панель администрирования"
