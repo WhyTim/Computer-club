@@ -97,15 +97,20 @@
           name="total-computers"
           readonly
         /><br /><br />
-
+        <input
+          type="text"
+          id="selected-computers-input"
+          name="selected-computers-input"
+          readonly
+        /><br /><br />
         <button type="submit" id = "submit">Забронировать</button>
       </form>
     </div>
 
     <div class="summary">
       <!-- Поле для отображения выбранных компьютеров -->
-      <div id="selected-computers" class="selected-computers"></div>
-
+      <div id="selected-computers" class="selected-computers" name="selected-computers"></div>
+      
       <!-- Поле для отображения итоговой стоимости -->
       <label>Итоговая стоимость:</label>
       <input type="text" id="total-cost" name="total-cost" readonly />
@@ -142,6 +147,7 @@
     {% comment %} src="{% static 'booking/js/script.js' %}" {% endcomment %}
     <!-- Подключение jQuery из CDN -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script > 
 
       // Передача JSON-данных в глобальную переменную
@@ -229,6 +235,7 @@
         selectedComputers = Array.from(
           document.querySelectorAll(".card.selected")
         ).map((card) => card.textContent);
+        document.getElementById("selected-computers-input").value = selectedComputers;
         selectedComputersDiv.innerHTML =
           selectedComputers.length > 0
             ? "<strong>Выбранные компьютеры:</strong><br>" +
