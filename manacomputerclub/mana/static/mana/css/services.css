@@ -1,8 +1,8 @@
-* {
+/* * {
   margin: 0;
   box-sizing: border-box;
   padding: 0;
-}
+} */
 
 html {
   font: normal 16px sans-serif;
@@ -34,7 +34,7 @@ a.help {
   color: rgb(192, 194, 110);
 }
 
-header {
+/* header {
   z-index: 1;
   position: relative;
   width: 100%;
@@ -46,15 +46,15 @@ header {
   color: #fff;
   background-color: #000000;
   padding: 20px 20px;
-}
+} */
 
-@keyframes fadein {
+/* @keyframes fadein {
   100% {
     opacity: 1;
   }
-}
+} */
 
-header h2 {
+/* header h2 {
   font-family: "Quicksand", sans-serif;
 }
 
@@ -97,7 +97,7 @@ a.btn:hover {
   color: black;
   background-color: rgb(123, 136, 49);
   border-color: black;
-}
+} */
 
 /* SECTION SERVICES */
 
@@ -220,6 +220,18 @@ section p {
   text-align: center;
   color: #007bff;
 }
+
+@media (max-width: 768px) {
+  .computer-container {
+      flex-direction: column;
+      align-items: center;
+  }
+
+  .computer {
+      width: 90%;
+  }
+}
+
 
 /* FOOTER */
 

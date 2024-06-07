@@ -13,12 +13,10 @@
       />
     </head>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link
-      rel="stylesheet"
-      type="text/css"
-      media="screen"
-      href="{% static 'mana/css/news_content.css' %}"
-    />
+    <link rel="stylesheet" type="text/css" media="screen" href="{% static 'mana/css/header_footer.css' %}" />
+    <link rel="stylesheet" type="text/css" media="screen" href="{% static 'mana/css/news_content.css' %}" />
+    <link rel="stylesheet" type="text/css" media="screen" href="{% static 'mana/css/responsive.css' %}" />
+    <script src="{% static 'mana/js/mobile.js' %}"></script>
     <link
       href="https://fonts.googleapis.com/css?family=Quicksand"
       rel="stylesheet"
@@ -27,7 +25,7 @@
       rel="stylesheet"
       href="https://use.fontawesome.com/releases/v5.1.0/css/all.css"
       integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt"
-      crossorigin="anonymous"
+      crossorigin="anonymous" 
     />
 
     <link
@@ -36,49 +34,61 @@
     />
   </head>
   <body>
-    <body>
-      <header>
-        <h2><a href="{% url 'home' %}"> MANA </a></h2>
-        <nav>
-          <li><a href="{% url 'services' %}"> Услуги и компьютеры </a></li>
-          <li><a href="{% url 'news' %}"> Новости </a></li>
-          <li><a href="{% url 'about' %}"> Контакты </a></li>
-          <li>
-            <a class="order" href="{% url 'booking:order' %}"> Забронировать </a>
-          </li>
-          {% if user.is_authenticated %}
-          <li>
-            <a class="account" href="{% url 'account' %}"> Личный кабинет </a>
-          </li>
-          <li class="account">{{ user }}</li>
-          <li>
-            <a class="account" href="{% url 'users:logout' %}"> Выйти </a>
-          </li>
-          {% else %}
-          <li>
-            <a class="sign" href="{% url 'users:register' %}"> Регистрация </a>
-          </li>
-          <li><a class="sign" href="{% url 'users:login' %}"> Вход </a></li>
-          {% endif %}
+      <header> 
+      
+        <div id="logo">        
+          <h2> <a href="{% url 'home' %}"> MANA </a></h2>
+        </div>
+  
+        <nav id="menu">
+          <div id="navbar">
+            <input id="menu__toggle" type="checkbox" />
+            <label class="menu__btn" for="menu__toggle">
+                <span></span>
+            </label>
+            <ul class="menu__box">
+              
+              <li><a href="{% url 'services' %}"> Услуги и компьютеры </a></li>
+              <li><a href="{% url 'news' %}"> Новости </a></li>
+              <li><a href="{% url 'about' %}"> Контакты </a></li>
+              <li>
+                <a class="order" href="{% url 'booking:order' %}"> Забронировать </a>
+              </li>
+              {% if user.is_authenticated %}
+                <li>
+                  <a class="account" href="{% url 'account' %}"> Личный кабинет: {{ user }} </a>
+                </li>
+                {% if user.is_authenticated and user.username == "admin" %}
+                  <li><a class="admin-link"  href="{% url 'admin:login' %}"> Администрирование </a></li>
+                {% endif %}
+                {% comment %} <li><a class="account" href="{% url 'account' %}">{{ user }}</a></li> {% endcomment %}
+                <li>
+                  <a class="account" href="{% url 'users:logout' %}"> Выйти </a>
+                </li>
+                {% else %}
+                <li>
+                  <a class="sign" href="{% url 'users:register' %}"> Регистрация </a>
+                </li>
+                <li><a class="sign" href="{% url 'users:login' %}"> Вход </a></li>
+              {% endif %}
         </nav>
       </header>
-
-      <section>
-        <h1>{{ news.title }}</h1>
-        <p class="date">{{ news.time_create|date:"d-m-Y H:i" }}</p>
-        <p>
-        {% autoescape off %}
-          {{ news.content|linebreaks }}
-        {% endautoescape %}
-        </p>
-        {% if news.photo %}
-        <p><img class="news-photo" src="{{news.photo.url}}" /></p></p>
-        {% endif %}
-      </section>
-
+      <main>
+        <section class="news-content">
+          <h1>{{ news.title }}</h1>
+          <p class="date">{{ news.time_create|date:"d-m-Y H:i" }}</p>
+          <p>
+          {% autoescape off %}
+            {{ news.content|linebreaks }}
+          {% endautoescape %}
+          </p>
+          {% if news.photo %}
+          <p><img class="news-photo" src="{{news.photo.url}}" /></p>
+          {% endif %}
+        </section>
+      </main>
       <footer id="contact">
-        <p>КОМПЬЮТЕРНЫЙ КЛУБ MANA</p>
-        <p>© Copyright All Rights Reserved</p>
+        <p class = "footer_name"><a href="{% url 'home' %}">КОМПЬЮТЕРНЫЙ КЛУБ MANA</a></p>
         <ul>
           <p>+7 (922) 900-01-80</p>
           <li>
@@ -105,5 +115,5 @@
         </ul>
       </footer>
     </body>
-  </body>
+  
 </html>

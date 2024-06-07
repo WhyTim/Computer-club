@@ -30,7 +30,7 @@ class Order(models.Model):
     duration = models.CharField(max_length=20,default='60', verbose_name="Длительность посещения")
     time_ordered = models.DateTimeField(default=datetime.now, blank=True, verbose_name="Дата и время заказа")
     computers = models.ManyToManyField(Computers, blank=True)
-    services = models.ManyToManyField(Services, blank=True)
+    services = models.CharField(max_length=50, default="Обычный зал 1ч.", verbose_name="Услуга")
     count_services = models.CharField(max_length=20,default='1')
     num_computers = models.PositiveIntegerField(default=1, verbose_name="Количество компьютеров")
     total_sum = models.DecimalField(max_digits=10, decimal_places=2, default=0.00, verbose_name="Сумма заказа")

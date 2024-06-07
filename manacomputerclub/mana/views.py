@@ -1,3 +1,4 @@
+from datetime import datetime, timedelta
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, HttpResponseNotFound, Http404
 from django.shortcuts import get_object_or_404, render, redirect
@@ -6,6 +7,7 @@ from django.template.loader import render_to_string
 from django.contrib.auth.views import LoginView
 from django.contrib.auth.forms import AuthenticationForm
 
+from booking.models import Order
 from mana.models import News, Services
 
 menu = [{'title': "Услуги и компьютеры", 'url_name': 'services'},
@@ -70,7 +72,48 @@ def about(request):
 
 @login_required
 def account(request):
+    order = Order.objects.filter(user=request.user).prefetch_related('computers')
+
+    # order = get_object_or_404(Order)
+    # computers = order.computers.all()
+    
+    # print(order)
+    # end_datetimes_list = []
+
+    # for o in order:
+    #     start_datetime = datetime.strptime(f'{order.day} {order.time}', '%Y-%m-%d %H:%M')
+    #     minutes = int(order.duration)
+    #     duration_timedelta = timedelta(minutes=minutes)
+    #     end_datetime = start_datetime + duration_timedelta
+    #     end_datetimes_list.append(end_datetime)
+
+    for o in order:
+        o.end_datetime, o.formated_end_datetime = calculate_end_datetime(o.day, o.time, o.duration)
+
+    current_datetime = datetime.now()
+
+    context = {
+        'data': order,
+        'current_datetime': current_datetime,
+        # 'end_datetime': end_datetimes_list,
+    } 
+    return render(request, 'mana/html/account.html', context)
+
+def calculate_end_datetime(day, time, duration):
+
+    start_datetime = datetime.combine(day, time)
+
+    end_datetime = start_datetime + timedelta(minutes=int(duration))
+
+    formatted_end_datetime = end_datetime.strftime('%d.%m.%Y %H:%M')
+
+    return end_datetime, formatted_end_datetime
+
+@login_required
+def delete_order(request, order_id):
+    order = get_object_or_404(Order, id=order_id, user=request.user)
+    if request.method == 'POST':
+        order.delete()
+        return redirect('account')  # Redirect to the orders page after deletion
     return render(request, 'mana/html/account.html')
-
-
 

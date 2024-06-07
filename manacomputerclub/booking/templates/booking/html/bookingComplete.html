@@ -13,12 +13,10 @@
       />
     </head>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link
-      rel="stylesheet"
-      type="text/css"
-      media="screen"
-      href="{% static 'booking/css/order.css' %}"
-    />
+    <link rel="stylesheet" type="text/css" media="screen" href="{% static 'mana/css/header_footer.css' %}" />
+    <link rel="stylesheet" type="text/css" media="screen" href="{% static 'booking/css/bookingComplete.css' %}" />
+    <link rel="stylesheet" type="text/css" media="screen" href="{% static 'mana/css/responsive.css' %}" />
+    <script src="{% static 'booking/js/mobile.js' %}"></script>
     <link
       href="https://fonts.googleapis.com/css?family=Quicksand"
       rel="stylesheet"
@@ -36,34 +34,55 @@
   </head>
 
   <body>
-    <header>
-      <h2><a href="{% url 'home' %}"> MANA </a></h2>
-      <nav>
-        <li><a href="{% url 'services' %}"> Услуги и компьютеры </a></li>
-        <li><a href="{% url 'news' %}"> Новости </a></li>
-        <li><a href="{% url 'about' %}"> Контакты </a></li>
-        <li><a class="order" href=""> Забронировать </a></li>
-        {% if user.is_authenticated %}
-        <li>
-          <a class="account" href="{% url 'account' %}"> Личный кабинет </a>
-        </li>
-        <li class="account">{{ user }}</li>
-        <li><a class="account" href="{% url 'users:logout' %}"> Выйти </a></li>
-        {% else %}
-        <li>
-          <a class="sign" href="{% url 'users:register' %}"> Регистрация </a>
-        </li>
-        <li><a class="sign" href="{% url 'users:login' %}"> Вход </a></li>
-        {% endif %}
+    <header> 
+      
+      <div id="logo">        
+        <h2> <a href="{% url 'home' %}"> MANA </a></h2>
+      </div>
+
+      <nav id="menu">
+        <div id="navbar">
+          <input id="menu__toggle" type="checkbox" />
+          <label class="menu__btn" for="menu__toggle">
+              <span></span>
+          </label>
+          <ul class="menu__box">
+            
+            <li><a href="{% url 'services' %}"> Услуги и компьютеры </a></li>
+            <li><a href="{% url 'news' %}"> Новости </a></li>
+            <li><a href="{% url 'about' %}"> Контакты </a></li>
+            <li>
+              <a class="order" href="{% url 'booking:order' %}"> Забронировать </a>
+            </li>
+            {% if user.is_authenticated %}
+              <li>
+                <a class="account" href="{% url 'account' %}"> Личный кабинет: {{ user }} </a>
+              </li>
+              {% if user.is_authenticated and user.username == "admin" %}
+                <li><a class="admin-link"  href="{% url 'admin:login' %}"> Администрирование </a></li>
+              {% endif %}
+              {% comment %} <li><a class="account" href="{% url 'account' %}">{{ user }}</a></li> {% endcomment %}
+              <li>
+                <a class="account" href="{% url 'users:logout' %}"> Выйти </a>
+              </li>
+              {% else %}
+              <li>
+                <a class="sign" href="{% url 'users:register' %}"> Регистрация </a>
+              </li>
+              <li><a class="sign" href="{% url 'users:login' %}"> Вход </a></li>
+            {% endif %}
       </nav>
     </header>
 
-    <section>
-    <h2>Вы успешно забронировали!</h2>
-    </section>
+    <div class="center-container">
+      <section class="booking-confirmation">
+          <h2>Вы успешно забронировали!</h2>
+          <p>Детали брони можно посмотреть в <a href="/account">личном кабинете</a>.</p>
+          <button class="account-button" onclick="window.location.href='/account'">Перейти в личный кабинет</button>
+      </section>
+    </div>
     <footer id="contact">
       <p>КОМПЬЮТЕРНЫЙ КЛУБ MANA</p>
-      <p>© Copyright All Rights Reserved</p>
       <ul>
         <p>+7 (922) 900-01-80</p>
         <li>

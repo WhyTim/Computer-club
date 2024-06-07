@@ -13,12 +13,10 @@
       />
     </head>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link
-      rel="stylesheet"
-      type="text/css"
-      media="screen"
-      href="{% static 'mana/css/account.css' %}"
-    />
+    <link rel="stylesheet" type="text/css" media="screen" href="{% static 'mana/css/header_footer.css' %}" />
+    <link rel="stylesheet" type="text/css" media="screen" href="{% static 'mana/css/account.css' %}" />
+    <link rel="stylesheet" type="text/css" media="screen" href="{% static 'mana/css/responsive.css' %}" />
+    <script src="{% static 'mana/js/mobile.js' %}"></script>
     <link
       href="https://fonts.googleapis.com/css?family=Quicksand"
       rel="stylesheet"
@@ -36,56 +34,89 @@
     />
   </head>
   <body>
-    <header>
-      <h2><a href="{% url 'home' %}"> MANA </a></h2>
-      <nav>
-        <li><a href="{% url 'services' %}"> Услуги и компьютеры </a></li>
-        <li><a href="{% url 'news' %}"> Новости </a></li>
-        <li><a href="{% url 'about' %}"> Контакты </a></li>
-        <li>
-          <a class="order" href="{% url 'booking:order' %}"> Забронировать </a>
-        </li>
-        <li>
-          <a class="account" href="{% url 'account' %}"> Личный кабинет </a>
-        </li>
-        {% if user.is_authenticated %}
-        <li class="account">{{ user }}</li>
-        <li><a class="account" href="{% url 'users:logout' %}"> Выйти </a></li>
-        {% endif %}
+    <header> 
+      
+      <div id="logo">        
+        <h2> <a href="{% url 'home' %}"> MANA </a></h2>
+      </div>
+
+      <nav id="menu">
+        <div id="navbar">
+          <input id="menu__toggle" type="checkbox" />
+          <label class="menu__btn" for="menu__toggle">
+              <span></span>
+          </label>
+          <ul class="menu__box">
+            
+            <li><a href="{% url 'services' %}"> Услуги и компьютеры </a></li>
+            <li><a href="{% url 'news' %}"> Новости </a></li>
+            <li><a href="{% url 'about' %}"> Контакты </a></li>
+            <li>
+              <a class="order" href="{% url 'booking:order' %}"> Забронировать </a>
+            </li>
+            {% if user.is_authenticated %}
+              <li>
+                <a class="account" href="{% url 'account' %}"> Личный кабинет: {{ user }} </a>
+              </li>
+              {% if user.is_authenticated and user.username == "admin" %}
+                <li><a class="admin-link"  href="{% url 'admin:login' %}"> Администрирование </a></li>
+              {% endif %}
+              {% comment %} <li><a class="account" href="{% url 'account' %}">{{ user }}</a></li> {% endcomment %}
+              <li>
+                <a class="account" href="{% url 'users:logout' %}"> Выйти </a>
+              </li>
+              {% else %}
+              <li>
+                <a class="sign" href="{% url 'users:register' %}"> Регистрация </a>
+              </li>
+              <li><a class="sign" href="{% url 'users:login' %}"> Вход </a></li>
+            {% endif %}
       </nav>
     </header>
 
-    <li><a class="order" href="booking.html"> Забронировать </a></li>
-    <li><a class="account" href="account.html"> Личный кабинет </a></li>
     <main>
       <section class="orders">
-        <h2>Ваши заказы</h2>
+        <h2>Ваши брони</h2>
         <table>
           <thead>
             <tr>
-              <th>Дата заказа</th>
+              <th>Адрес клуба</th>
+              <th>Дата и время начала</th>
+              <th>Дата и время окончания</th>
               <th>Продолжительность</th>
               <th>Компьютеры</th>
               <th>Услуга</th>
               <th>Итоговая стоимость</th>
+              
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>01.04.2024</td>
-              <td>2 часа</td>
-              <td>Компьютер 1, Компьютер 2, Компьютер 3</td>
-              <td>Обычный зал</td>
-              <td>200 рублей</td>
-            </tr>
-            <tr>
-              <td>02.04.2024</td>
-              <td>3 часа</td>
-              <td>Компьютер 4, Компьютер 5</td>
-              <td>Премиум зал</td>
-              <td>450 рублей</td>
-            </tr>
-            <!-- Добавьте остальные заказы по аналогии -->
+            {% for order in data %}
+              <tr>
+                <td>{{ order.club }}</td>
+                <td>{{ order.day|date:"d.m.Y" }}   {{order.time}}</td>
+                <td>{{ order.formated_end_datetime }}</td>
+                <td>{{ order.duration }} минут</td>
+                <td>
+                  {% for computer in order.computers.all %}
+                    {{ computer.id }}{% if not forloop.last %}, {% endif %}
+                  {% endfor %}
+                </td>
+                <td>{{ order.services }}</td>
+                <td>{{ order.total_sum }} рублей</td>
+                <td>
+                  {% if order.end_datetime > current_datetime %}  <!-- Проверка условия -->
+                    <form method="post" action="{% url 'delete_order' order.id %}">
+                        {% csrf_token %}
+                        <button type="submit" class="delete-button">Отменить</button>
+                    </form>
+                  {% else %}
+                    Завершен
+                  {% endif %}
+                </td>
+              </tr>
+            {% endfor %}
+            
           </tbody>
         </table>
       </section>
@@ -96,8 +127,7 @@
   </body>
 
   <footer id="contact">
-    <p>КОМПЬЮТЕРНЫЙ КЛУБ MANA</p>
-    <p>© Copyright All Rights Reserved</p>
+    <p><a class = "footer_name" href="{% url 'home' %}">КОМПЬЮТЕРНЫЙ КЛУБ MANA</a></p>
     <ul>
       <p>+7 (922) 900-01-80</p>
       <li>

@@ -11,5 +11,6 @@ urlpatterns = [
     # path('booking', views.booking, name='booking'),
     path('account', views.account, name='account'),
     path('news/<int:news_id>/', views.newsid, name='news_id'),
+    path('account/delete/<int:order_id>/', views.delete_order, name='delete_order'),
 
 ]

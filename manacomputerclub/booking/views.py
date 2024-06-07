@@ -1,7 +1,8 @@
-from datetime import datetime
+from datetime import datetime, timedelta
 import json
 from pyexpat.errors import messages
 from django.contrib.auth.decorators import login_required
+from django.http import JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.contrib import messages
 from booking.models import Order
@@ -11,6 +12,9 @@ from mana.models import Computers, Services
 @login_required
 def index(request): 
     all_services = Services.objects.all()
+
+    data_ajax = request.GET.get('data', None)
+    print(data_ajax)
 
     if request.method == 'POST':
         club = request.POST.get('club')
@@ -38,7 +42,17 @@ def index(request):
         # print(club, day, time, service)
         return redirect('booking:submit', permanent=True)
     
-    return render(request, 'booking/html/booking.html', {'services': all_services})
+    all_computers = Computers.objects.all().values('id', 'title', 'room')
+    data = {
+        'computers': list(all_computers)
+    }
+    
+    context = {
+        'data': json.dumps (data),
+        'services': all_services,
+    }
+
+    return render(request, 'booking/html/booking.html', context)
 
 
 def bookingSubmit(request):
@@ -76,6 +90,7 @@ def bookingSubmit(request):
                                 time = time,
                                 time_ordered = today,
                                 num_computers = num_computers,
+                                services = service,
                                 total_sum = total_sum,
                                 count_services = 1,
                                 duration = duration,
@@ -103,7 +118,7 @@ def bookingSubmit(request):
     
     # computers = Computers.objects.all().values('id', 'title', 'room')
     service_room = Services.objects.get(title=service)
-    print(service_room.room)
+    print(service_room.room)  # выбранная комната default vip
     
     # order = get_object_or_404(Order, id=228)
     # computers2 = order.computers.all()
@@ -113,7 +128,9 @@ def bookingSubmit(request):
     # selected_computers = json.loads(result)
     
 
-    orders = Order.objects.exclude(computers=None)
+
+
+    orders = Order.objects.filter(club=club).exclude(computers=None)
     selected_time = datetime.strptime(time, '%H:%M').time()
     selected_date = datetime.strptime(day, '%Y-%m-%d').date()
     selected_duration_seconds = int(duration) * 60
@@ -126,7 +143,7 @@ def bookingSubmit(request):
     for o in orders:
         order = get_object_or_404(Order, id=o.id)
         computers2 = order.computers.all()
-        # selected_order_datetime = datetime.combine(order.day, order.time)
+
         print(o.time)
         if o.time != None or o.day != None:
             
@@ -136,8 +153,8 @@ def bookingSubmit(request):
             order_unix_time = order_datetime.timestamp()
             order_total_unix_time = order_unix_time + order_duration_seconds
 
-            # all_computers = order.computers.all()
             computers_titles = [computer.title for computer in computers2]
+
             # если попали в промежуток, то говорим, какие компы не отображать
             print(order_datetime, selected_datetime, duration, order_datetime, o.duration)
             print(datetime.fromtimestamp(order_unix_time), datetime.fromtimestamp(selected_unix_time), datetime.fromtimestamp(order_total_unix_time))
@@ -146,13 +163,12 @@ def bookingSubmit(request):
             if int(order_unix_time) < int(selected_unix_time) < int(order_total_unix_time):
                 
                 block_list+=computers_titles
-
-            # print(selected_datetime, selected_order_datetime)
             
             print([computer.title for computer in computers2], total_unix_time, order_total_unix_time, int(total_unix_time) - int(order_total_unix_time))
             
             # если время заказов order_total_unix_time меньше чем время текущего заказа total_unix_time, то отображаем эти компы
        
+
 
     if service_room.room == "default":
         computers = Computers.objects.filter(room='default').exclude(title__in=block_list).values('id', 'title', 'room')
@@ -160,20 +176,29 @@ def bookingSubmit(request):
         computers = Computers.objects.filter(room='vip').exclude(title__in=block_list).values('id', 'title', 'room')
     else:
         computers = Computers.objects.filter(room='premium').exclude(title__in=block_list).values('id', 'title', 'room')
+
+    
     data = {
         'computers': list(computers),
     }
     
+    start_datetime = datetime.strptime(f'{day} {time}', '%Y-%m-%d %H:%M')
+    minutes = int(duration)
+    duration_timedelta = timedelta(minutes=minutes)
+    end_datetime = start_datetime + duration_timedelta
+
     context = {
         'data': json.dumps (data),
         'services': all_services,
         'day': day,
         'time': time,
+        'end_time': end_datetime.strftime('%Y-%m-%d %H:%M'),
         'service': service,
         'club': club,
         'duration': duration,
         'sum': sum,
     }  # передача компьютеров в js
+
     return render(request, 'booking/html/bookingComputers.html', context)
 
 
@@ -187,3 +212,33 @@ def bookingSuccess(request):
     sum = request.session.get('service_sum')
     
     return render(request, 'booking/html/bookingComplete.html')
+
+
+def get_available_computers(request):
+    service = request.GET.get('service')
+    room = "default" if service == "default" else "vip" if service == "vip" else "premium"
+
+    # Получить все заказы, которые имеют связанные компьютеры
+    orders = Order.objects.exclude(computers=None)
+    occupied_computers = []
+
+    # for order in orders:
+    #     occupied_computers.update(order.computers.all().values_list('id', flat=True))
+
+    # Фильтровать компьютеры в зависимости от типа комнаты и исключить занятые
+    computers = Computers.objects.filter(room=room).exclude(id__in=occupied_computers).values('id', 'title', 'room')
+
+    # Преобразование данных в список
+    computers_list = list(computers)
+    print("Список компьютеров", computers_list)
+
+    return JsonResponse({'computers': computers_list})
+
+
+def get_data(request):
+    """Проверка доступности логина"""
+    username = request.GET.get('data', None)
+    response = {
+        'is_taken': User.objects.filter(username__iexact=username).exists()
+    }
+    return JsonResponse(response)

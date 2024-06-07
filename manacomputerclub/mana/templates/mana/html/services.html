@@ -13,12 +13,10 @@
       />
     </head>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link
-      rel="stylesheet"
-      type="text/css"
-      media="screen"
-      href="{% static 'mana/css/services.css' %}"
-    />
+    <link rel="stylesheet" type="text/css" media="screen" href="{% static 'mana/css/header_footer.css' %}" />
+    <link rel="stylesheet" type="text/css" media="screen" href="{% static 'mana/css/services.css' %}" />
+    <link rel="stylesheet" type="text/css" media="screen" href="{% static 'mana/css/responsive.css' %}" />
+    <script src="{% static 'mana/js/mobile.js' %}"></script>
     <link
       href="https://fonts.googleapis.com/css?family=Quicksand"
       rel="stylesheet"
@@ -36,135 +34,153 @@
     />
   </head>
   <body>
-    <header>
-      <h2><a href="{% url 'home' %}"> MANA </a></h2>
-      <nav>
-        <li><a href="{% url 'services' %}"> Услуги и компьютеры </a></li>
-        <li><a href="{% url 'news' %}"> Новости </a></li>
-        <li><a href="{% url 'about' %}"> Контакты </a></li>
-        <li>
-          <a class="order" href="{% url 'booking:order' %}"> Забронировать </a>
-        </li>
-        {% if user.is_authenticated %}
-        <li>
-          <a class="account" href="{% url 'account' %}"> Личный кабинет </a>
-        </li>
-        <li class="account">{{ user }}</li>
-        <li><a class="account" href="{% url 'users:logout' %}"> Выйти </a></li>
-        {% else %}
-        <li>
-          <a class="sign" href="{% url 'users:register' %}"> Регистрация </a>
-        </li>
-        <li><a class="sign" href="{% url 'users:login' %}"> Вход </a></li>
-        {% endif %}
+    <header> 
+      
+      <div id="logo">        
+        <h2> <a href="{% url 'home' %}"> MANA </a></h2>
+      </div>
+
+      <nav id="menu">
+        <div id="navbar">
+          <input id="menu__toggle" type="checkbox" />
+          <label class="menu__btn" for="menu__toggle">
+              <span></span>
+          </label>
+          <ul class="menu__box">
+            
+            <li><a href="{% url 'services' %}"> Услуги и компьютеры </a></li>
+            <li><a href="{% url 'news' %}"> Новости </a></li>
+            <li><a href="{% url 'about' %}"> Контакты </a></li>
+            <li>
+              <a class="order" href="{% url 'booking:order' %}"> Забронировать </a>
+            </li>
+            {% if user.is_authenticated %}
+              <li>
+                <a class="account" href="{% url 'account' %}"> Личный кабинет: {{ user }} </a>
+              </li>
+              {% if user.is_authenticated and user.username == "admin" %}
+                <li><a class="admin-link"  href="{% url 'admin:login' %}"> Администрирование </a></li>
+              {% endif %}
+              {% comment %} <li><a class="account" href="{% url 'account' %}">{{ user }}</a></li> {% endcomment %}
+              <li>
+                <a class="account" href="{% url 'users:logout' %}"> Выйти </a>
+              </li>
+              {% else %}
+              <li>
+                <a class="sign" href="{% url 'users:register' %}"> Регистрация </a>
+              </li>
+              <li><a class="sign" href="{% url 'users:login' %}"> Вход </a></li>
+            {% endif %}
       </nav>
     </header>
-    <div class="content">
-      <h1 class="price">Цены на услуги</h1>
-      <div class="services">
-        <div class="room">
-          <h2>Обычный зал</h2>
-          <table>
-            <thead>
-              <tr>
-                <th>Наименование услуги</th>
-                <th>Цена (руб.)</th>
-              </tr>
-            </thead>
-            <tbody>
-              {% for service in services %}
-              <tr>
-                {% if service.room == "default" %}
-                <td>{{ service.title }}</td>
-                <td>{{ service.sum }}</td>
-                {% endif %}
-              </tr>
-              {% endfor %}
-            </tbody>
-          </table>
-        </div>
-        <div class="room">
-          <h2>Вип зал</h2>
-          <table>
-            <thead>
-              <tr>
-                <th>Наименование услуги</th>
-                <th>Цена (руб.)</th>
-              </tr>
-            </thead>
-            <tbody>
-              {% for service in services %}
-              <tr>
-                {% if service.room == "vip" %}
-                <td>{{ service.title }}</td>
-                <td>{{ service.sum }}</td>
-                {% endif %}
-              </tr>
-              {% endfor %}
-            </tbody>
-          </table>
-        </div>
-        <div class="room">
-          <h2>Премиум зал</h2>
-          <table>
-            <thead>
-              <tr>
-                <th>Наименование услуги</th>
-                <th>Цена (руб.)</th>
-              </tr>
-            </thead>
-            <tbody>
-              {% for service in services %}
-              <tr>
-                {% if service.room == "premium" %}
-                <td>{{ service.title }}</td>
-                <td>{{ service.sum }}</td>
-                {% endif %}
-              </tr>
-              {% endfor %}
-            </tbody>
-          </table>
-        </div>
-      </div>
-      <h1 class="price">Характеристики компьютеров</h1>
-      <section class="packages" id="computers">
-        <main>
-          <div class="computer-container">
-            <div class="computer">
-              <img src="{% static 'mana/imgs/def.jpg' %}" alt="Обычный зал" />
-              <h2>Обычный зал</h2>
-              <p>Процессор: Intel Core i5</p>
-              <p>Оперативная память: 8 ГБ</p>
-              <p>Жесткий диск: 500 ГБ HDD</p>
-              <p>Видеокарта: NVIDIA GeForce GTX 1050</p>
-            </div>
-            <div class="computer">
-              <img src="{% static 'mana/imgs/vip.jpg' %}" alt="VIP зал" />
-              <h2>Вип зал</h2>
-              <p>Процессор: Intel Core i7</p>
-              <p>Оперативная память: 16 ГБ</p>
-              <p>Жесткий диск: 1 ТБ SSD</p>
-              <p>Видеокарта: NVIDIA GeForce RTX 3060</p>
-            </div>
-            <div class="computer">
-              <img
-                src="{% static 'mana/imgs/premium.jpg' %}"
-                alt="Премиум зал"
-              />
-              <h2>Премиум зал</h2>
-              <p>Процессор: Intel Core i9</p>
-              <p>Оперативная память: 32 ГБ</p>
-              <p>Жесткий диск: 2 ТБ SSD</p>
-              <p>Видеокарта: NVIDIA GeForce RTX 3080</p>
-            </div>
+    <main>
+    
+      <div class="content">
+        <h1 class="price">Цены на услуги</h1>
+        <div class="services">
+          <div class="room">
+            <h2>Обычный зал</h2>
+            <table>
+              <thead>
+                <tr>
+                  <th>Наименование услуги</th>
+                  <th>Цена (руб.)</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for service in services %}
+                <tr>
+                  {% if service.room == "default" %}
+                  <td>{{ service.title }}</td>
+                  <td>{{ service.sum }}</td>
+                  {% endif %}
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
           </div>
-        </main>
-      </section>
-    </div>
-
+          <div class="room">
+            <h2>Вип зал</h2>
+            <table>
+              <thead>
+                <tr>
+                  <th>Наименование услуги</th>
+                  <th>Цена (руб.)</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for service in services %}
+                <tr>
+                  {% if service.room == "vip" %}
+                  <td>{{ service.title }}</td>
+                  <td>{{ service.sum }}</td>
+                  {% endif %}
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+          <div class="room">
+            <h2>Премиум зал</h2>
+            <table>
+              <thead>
+                <tr>
+                  <th>Наименование услуги</th>
+                  <th>Цена (руб.)</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for service in services %}
+                <tr>
+                  {% if service.room == "premium" %}
+                  <td>{{ service.title }}</td>
+                  <td>{{ service.sum }}</td>
+                  {% endif %}
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+    
+        <h1 class="price">Характеристики компьютеров</h1>
+        <section class="packages" id="computers">
+          <main>
+            <div class="computer-container">
+              <div class="computer">
+                <img src="{% static 'mana/imgs/def.jpg' %}" alt="Обычный зал" />
+                <h2>Обычный зал</h2>
+                <p>Процессор: Intel Core i5</p>
+                <p>Оперативная память: 8 ГБ</p>
+                <p>Жесткий диск: 500 ГБ HDD</p>
+                <p>Видеокарта: NVIDIA GeForce GTX 1050</p>
+              </div>
+              <div class="computer">
+                <img src="{% static 'mana/imgs/vip.jpg' %}" alt="VIP зал" />
+                <h2>Вип зал</h2>
+                <p>Процессор: Intel Core i7</p>
+                <p>Оперативная память: 16 ГБ</p>
+                <p>Жесткий диск: 1 ТБ SSD</p>
+                <p>Видеокарта: NVIDIA GeForce RTX 3060</p>
+              </div>
+              <div class="computer">
+                <img
+                  src="{% static 'mana/imgs/premium.jpg' %}"
+                  alt="Премиум зал"
+                />
+                <h2>Премиум зал</h2>
+                <p>Процессор: Intel Core i9</p>
+                <p>Оперативная память: 32 ГБ</p>
+                <p>Жесткий диск: 2 ТБ SSD</p>
+                <p>Видеокарта: NVIDIA GeForce RTX 3080</p>
+              </div>
+            </div>
+          </main>
+        </section>
+      </div>
+    </main>
     <footer id="contact">
-      <p>КОМПЬЮТЕРНЫЙ КЛУБ MANA</p>
-      <p>© Copyright All Rights Reserved</p>
+      <p class = "footer_name"><a href="{% url 'home' %}">КОМПЬЮТЕРНЫЙ КЛУБ MANA</a></p>
       <ul>
         <p>+7 (922) 900-01-80</p>
         <li>
