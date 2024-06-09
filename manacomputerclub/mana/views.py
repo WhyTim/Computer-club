@@ -17,7 +17,7 @@ menu = [{'title': "Услуги и компьютеры", 'url_name': 'services'
 
 
 # request содержит информацию о сессияк, куки этого HttpRequest
-def index(request): 
+def index(request):
     news = News.objects.filter(is_published=1)
     data = {
         'news': news,
@@ -27,13 +27,11 @@ def index(request):
 
 def services(request):
     services = Services.objects.all()
-
     return render(request, 'mana/html/services.html', {'services': services})
 
 
 def news(request):
     news = News.objects.filter(is_published=1)
-
     data = {
         'title': 'Главная страница',
         'menu': menu,
@@ -41,9 +39,6 @@ def news(request):
     }
     return render(request, 'mana/html/news.html', context=data)
 
-    # if news > 100:
-    #     url_redirect = reverse('news', args=('music', ))
-    #     return redirect(url_redirect)
 
 def newsid(request, news_id):
     news = get_object_or_404(News, pk=news_id)
@@ -58,34 +53,14 @@ def newsid(request, news_id):
 
     return render(request, 'mana/html/news_content.html', data)
 
+
 def about(request):
     return render(request, 'mana/html/about.html')
-
-# def login(request):
-#     return render(request, 'mana/html/signin.html')
-
-
-# @login_required
-# def booking(request):
-#     return render(request, 'mana/html/booking.html')
 
 
 @login_required
 def account(request):
     order = Order.objects.filter(user=request.user).prefetch_related('computers')
-
-    # order = get_object_or_404(Order)
-    # computers = order.computers.all()
-    
-    # print(order)
-    # end_datetimes_list = []
-
-    # for o in order:
-    #     start_datetime = datetime.strptime(f'{order.day} {order.time}', '%Y-%m-%d %H:%M')
-    #     minutes = int(order.duration)
-    #     duration_timedelta = timedelta(minutes=minutes)
-    #     end_datetime = start_datetime + duration_timedelta
-    #     end_datetimes_list.append(end_datetime)
 
     for o in order:
         o.end_datetime, o.formated_end_datetime = calculate_end_datetime(o.day, o.time, o.duration)
@@ -95,19 +70,16 @@ def account(request):
     context = {
         'data': order,
         'current_datetime': current_datetime,
-        # 'end_datetime': end_datetimes_list,
-    } 
+    }
     return render(request, 'mana/html/account.html', context)
 
+
 def calculate_end_datetime(day, time, duration):
-
     start_datetime = datetime.combine(day, time)
-
     end_datetime = start_datetime + timedelta(minutes=int(duration))
-
     formatted_end_datetime = end_datetime.strftime('%d.%m.%Y %H:%M')
-
     return end_datetime, formatted_end_datetime
+
 
 @login_required
 def delete_order(request, order_id):
@@ -116,4 +88,3 @@ def delete_order(request, order_id):
         order.delete()
         return redirect('account')  # Redirect to the orders page after deletion
     return render(request, 'mana/html/account.html')
-

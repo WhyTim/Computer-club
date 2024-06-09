@@ -6,48 +6,36 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <title>Mana - бронирование</title>
     <head>
-      <link
-        rel="icon"
-        type="image/jpg"
-        href="{% static 'mana/imgs/logo.jpg' %}"
-      />
+      <link rel="icon" type="image/jpg" href="{% static 'mana/imgs/logo.jpg' %}" />
     </head>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="stylesheet" type="text/css" media="screen" href="{% static 'mana/css/header_footer.css' %}" />
     <link rel="stylesheet" type="text/css" media="screen" href="{% static 'booking/css/order.css' %}" />
     <link rel="stylesheet" type="text/css" media="screen" href="{% static 'mana/css/responsive.css' %}" />
     <script src="{% static 'mana/js/mobile.js' %}"></script>
-    <link
-      href="https://fonts.googleapis.com/css?family=Quicksand"
-      rel="stylesheet"
-    />
+    <link href="https://fonts.googleapis.com/css?family=Quicksand" rel="stylesheet" />
     <link
       rel="stylesheet"
       href="https://use.fontawesome.com/releases/v5.1.0/css/all.css"
       integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt"
       crossorigin="anonymous"
     />
-    <link
-      href="https://fonts.googleapis.com/css?family=Open+Sans"
-      rel="stylesheet"
-    />
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet" />
   </head>
 
   <body>
-    <header> 
-      
-      <div id="logo">        
-        <h2> <a href="{% url 'home' %}"> MANA </a></h2>
+    <header>
+      <div id="logo">
+        <h2><a href="{% url 'home' %}"> MANA </a></h2>
       </div>
 
       <nav id="menu">
         <div id="navbar">
           <input id="menu__toggle" type="checkbox" />
           <label class="menu__btn" for="menu__toggle">
-              <span></span>
+            <span></span>
           </label>
           <ul class="menu__box">
-            
             <li><a href="{% url 'services' %}"> Услуги и компьютеры </a></li>
             <li><a href="{% url 'news' %}"> Новости </a></li>
             <li><a href="{% url 'about' %}"> Контакты </a></li>
@@ -55,22 +43,23 @@
               <a class="order" href="{% url 'booking:order' %}"> Забронировать </a>
             </li>
             {% if user.is_authenticated %}
-              <li>
-                <a class="account" href="{% url 'account' %}"> Личный кабинет: {{ user }} </a>
-              </li>
-              {% if user.is_authenticated and user.username == "admin" %}
-                <li><a class="admin-link"  href="{% url 'admin:login' %}"> Администрирование </a></li>
-              {% endif %}
-              {% comment %} <li><a class="account" href="{% url 'account' %}">{{ user }}</a></li> {% endcomment %}
-              <li>
-                <a class="account" href="{% url 'users:logout' %}"> Выйти </a>
-              </li>
-              {% else %}
-              <li>
-                <a class="sign" href="{% url 'users:register' %}"> Регистрация </a>
-              </li>
-              <li><a class="sign" href="{% url 'users:login' %}"> Вход </a></li>
+            <li>
+              <a class="account" href="{% url 'account' %}"> Личный кабинет: {{ user }} </a>
+            </li>
+            {% if user.is_authenticated and user.username == "admin" %}
+            <li><a class="admin-link" href="{% url 'admin:login' %}"> Администрирование </a></li>
             {% endif %}
+            <li>
+              <a class="account" href="{% url 'users:logout' %}"> Выйти </a>
+            </li>
+            {% else %}
+            <li>
+              <a class="sign" href="{% url 'users:register' %}"> Регистрация </a>
+            </li>
+            <li><a class="sign" href="{% url 'users:login' %}"> Вход </a></li>
+            {% endif %}
+          </ul>
+        </div>
       </nav>
     </header>
 
@@ -87,101 +76,122 @@
           ><br /><br />
           <label>Дата:</label>
           <input type="date" name="day" id="day-input" onfocus="this.showPicker()" required /><br /><br />
-
           <label>Время:</label>
-
           <input type="time" name="time" id="time-input" onfocus="this.showPicker()" required />
-
-        <br /><br />
-
+          <br /><br />
           <label>Услуга:</label>
           <select name="service" id="service-select" required>
             <option value="" disabled selected>Выберите услугу</option>
             {% for service in services %}
-              <option value="{{ service.title }}">{{ service.title }}</option>
-            {% endfor %}
-            <select  
+            <option value="{{ service.title }}">{{ service.title }}</option>
+            {% endfor %}</select
           ><br /><br />
           <div id="available-computers">
-            <!-- Здесь будет отображаться количество доступных компьютеров -->
+            <p class="available-computers-info">Для выбора компьютеров заполните все необходимые поля</p>
           </div>
-
-          <button type="submit">Далее</button>
+          <br />
+          <button type="submit">Выбрать компьютеры</button>
         </form>
       </div>
     </section>
     <footer id="contact">
-      <p class = "footer_name"><a href="{% url 'home' %}">КОМПЬЮТЕРНЫЙ КЛУБ MANA</a></p>
+      <p class="footer_name"><a href="{% url 'home' %}">КОМПЬЮТЕРНЫЙ КЛУБ MANA</a></p>
       <ul>
         <p>+7 (922) 900-01-80</p>
         <li>
-          <a href="https://vk.com/mana_kirov"
-            ><i class="fab fa-vk fa-2x"></i
-          ></a>
+          <a href="https://vk.com/mana_kirov"><i class="fab fa-vk fa-2x"></i></a>
         </li>
         <li>
-          <a href="https://t.me/mana_kirov"
-            ><i class="fab fa-telegram fa-2x"></i
-          ></a>
+          <a href="https://t.me/mana_kirov"><i class="fab fa-telegram fa-2x"></i></a>
         </li>
         <li>
-          <a
-            href="https://vk.com/away.php?to=https%3A%2F%2Fwww.twitch.tv%2Fmana_off"
+          <a href="https://vk.com/away.php?to=https%3A%2F%2Fwww.twitch.tv%2Fmana_off"
             ><i class="fab fa-twitch fa-2x"></i
           ></a>
         </li>
         <li>
-          <a href="https://discord.gg/A8pYcmUvqf"
-            ><i class="fab fa-discord fa-2x"></i
-          ></a>
+          <a href="https://discord.gg/A8pYcmUvqf"><i class="fab fa-discord fa-2x"></i></a>
         </li>
       </ul>
     </footer>
+    {% comment %} Установка библиотеки jQuery {% endcomment %}
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script> 
-        const clubSelect = document.getElementById('club-select');
-        const dayInput = document.getElementById('day-input');
-        const timeInput = document.getElementById('time-input');
-        const serviceSelect = document.getElementById('service-select');
-        const availableComputersDiv = document.getElementById('available-computers');
+    <script>
+        const clubSelect = document.getElementById("club-select");
+        const dayInput = document.getElementById("day-input");
+        const timeInput = document.getElementById("time-input");
+        const serviceSelect = document.getElementById("service-select");
+        const availableComputersDiv = document.getElementById("available-computers");
 
-        dayInput.addEventListener('change', function() {
+        function sendAjaxRequest() {
+          const club = clubSelect.value;
+          const day = dayInput.value;
+          const time = timeInput.value;
+          const service = serviceSelect.value;
+
+          if (club && day && time && service) {
+            $.ajax({
+                url: "get_available_computers/",
+                type: "GET",
+                dataType: "json",
+                data: {
+                    club: club,
+                    day: day,
+                    time: time,
+                    service: service,
+                },
+                success: function (data) {
+                    // Обработка полученных данных
+                    if (data.aviable_computers && data.aviable_computers.length > 0) {
+                        availableComputersDiv.innerHTML = `<p class="available-computers-count">Компьютеров доступно: ${data.aviable_computers.length}</p>`;
+
+                        data.aviable_computers.forEach(function (computer) {
+                          const computerDiv = document.createElement("div");
+                          computerDiv.classList.add("computer-item");
+                          computerDiv.innerHTML = `<h3>№: ${computer.id}</h3>`;
+                          availableComputersDiv.appendChild(computerDiv);
+                        });
+                    } else {
+                        availableComputersDiv.innerHTML = "<p>Нет доступных компьютеров для выбранных параметров!</p>";
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.error("Error: " + error);
+                    availableComputersDiv.innerHTML = "<p>Произошла ошибка при получении данных о доступных компьютерах. Пожалуйста, попробуйте еще раз позже.</p>";
+                }
+            });
+        } else {
+            console.log("All fields are not filled yet.");
+        }
+      }
+
+
+
+        clubSelect.addEventListener("change", sendAjaxRequest);
+        dayInput.addEventListener("change", sendAjaxRequest);
+        timeInput.addEventListener("change", sendAjaxRequest);
+        serviceSelect.addEventListener("change", sendAjaxRequest);
+
+        {% comment %} dayInput.addEventListener("change", function () {
           $.ajax({
-            data: dayInput.value, // получаяем данные формы
-            url: "",
-            
+            url: "get_available_computers/",
+            type: "GET",
+            dataType: "json",
+            data: {
+              day: dayInput.value,
+            },
+            success: function (data) {
+              alert(dayInput.value);
+            },
+          });
         });
-        return false; 
-        };
 
-
-        var data = JSON.parse ("{{ data | escapejs }}");
-        const availableComputers = data.computers.map(computer => ({
-            id: computer.id,
-            name: computer.title
-        }));
-      
-
-        if (serviceSelect) {
-          serviceSelect.addEventListener('change', function() {
-            const selectedService = serviceSelect.value;
-            availableComputersDiv.innerHTML = `
-                <p>Доступные компьютеры: ${availableComputers.length}</p>
-                <ul>
-                    ${availableComputers.map(computer => `<li>${computer.name}</li>`).join('')}
-                </ul>
-            `;
-          }
-            // Обновление интерфейса с количеством доступных компьютеров
-            
-            // if serviceSelect.value == "Обычный зал 1ч." {
-              
-            // }
-            
-        
-                            
-        )};
-    </script> 
+        var data = JSON.parse("{{ data | escapejs }}");
+        const availableComputers = data.computers.map((computer) => ({
+          id: computer.id,
+          name: computer.title,
+        })); {% endcomment %}
+    </script>
   </body>
 </html>

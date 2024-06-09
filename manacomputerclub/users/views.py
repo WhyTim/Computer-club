@@ -5,19 +5,16 @@ from django.template.loader import render_to_string
 from django.contrib.auth.views import LoginView
 from django.views.generic import CreateView
 from django.contrib.auth.forms import AuthenticationForm
-from .forms import RegisterUserForm
+from .forms import CustomAuthenticationForm, RegisterUserForm
+from django.contrib.auth import authenticate, login
+from django.contrib import messages
+from django.shortcuts import render, redirect
 
 
 class LoginUser(LoginView):
-    form_class = AuthenticationForm
+    form_class = CustomAuthenticationForm
     template_name = 'users/signin.html'
     extra_context = {'title': 'Авторизация'}
-
-    # def get_success_url(self):
-    #     return reverse_lazy('register')
-# def login(request):
-#     # return render(request, 'users/signup.html')
-#     return HttpResponse("login")
 
 
 class RegisterUser(CreateView):
@@ -26,7 +23,3 @@ class RegisterUser(CreateView):
     extra_context = {'title': "Регистрация"}
     success_url = reverse_lazy('users:login')
     # return render(request, 'users/signup.html')
-
-
-# def logout_user(request):
-#     return HttpResponse("logout")

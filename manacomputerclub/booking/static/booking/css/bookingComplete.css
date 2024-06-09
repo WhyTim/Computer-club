@@ -1,9 +1,6 @@
-
-
 body {
   background-color: #121212;
   color: #fff;
-  
 }
 
 /* SECTION */
@@ -28,7 +25,6 @@ body {
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   max-width: 600px;
   margin: 0 auto;
-  
 }
 
 .booking-confirmation h2 {
@@ -62,11 +58,8 @@ body {
   background-color: #ffd700;
 }
 
-
 /* FOOTER */
 
 footer {
-
   position: fixed;
-
 }

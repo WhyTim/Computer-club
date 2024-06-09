@@ -27,3 +27,12 @@ class RegisterUserForm(UserCreationForm):
         if get_user_model().objects.filter(email=email).exists():
             raise forms.ValidationError("Такой E-mail уже существует!")
         return email
+
+
+class CustomAuthenticationForm(AuthenticationForm):
+    error_messages = {
+        'invalid_login': (
+            "Неправильное имя пользователя или пароль. Пожалуйста, проверьте правильность ввода."
+        ),
+        'inactive': ("Этот аккаунт неактивен."),
+    }

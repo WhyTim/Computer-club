@@ -27,7 +27,7 @@ a:hover {
 form {
   max-width: 750px;
   margin: 0 auto;
-  
+
   margin-top: 15px;
 }
 
@@ -36,9 +36,6 @@ label {
   margin-bottom: 5px;
 }
 
-/* input[type="date"],
-input[type="time"],
-input[type="number"] { */
 input,
 select {
   width: 100%;
@@ -81,8 +78,6 @@ button:hover {
   background-color: #8f8f8f;
 }
 
-
-
 .row {
   display: flex;
   flex-wrap: wrap;
@@ -90,14 +85,14 @@ button:hover {
 }
 
 .card {
-  flex: 0 0 calc(20% - 20px); /* Устанавливаем ширину карточки в 20% */
+  flex: 0 0 calc(20% - 20px);
   margin: 10px;
   border: 1px solid #ccc;
   border-radius: 5px;
   padding: 10px;
   cursor: pointer;
   transition: background-color 0.3s ease;
-  box-sizing: border-box; /* Учитываем внешние отступы и границы в вычислении размеров */
+  box-sizing: border-box;
 }
 
 .card:hover {
@@ -165,7 +160,6 @@ button:hover {
 
 /* DETAILS */
 
-
 .order-details {
   background-color: #2b2b2b;
   color: #ffffff;
@@ -222,28 +216,28 @@ button:hover {
 
 @media (max-width: 768px) {
   .order-details {
-      padding: 10px;
+    padding: 10px;
   }
 
   .detail-item {
-      flex-direction: column;
-      align-items: flex-start;
+    flex-direction: column;
+    align-items: flex-start;
   }
 
   .detail-label,
   .detail-value,
   .detail-input {
-      text-align: left;
-      padding: 5px 0;
+    text-align: left;
+    padding: 5px 0;
   }
 
   .detail-value,
   .detail-input {
-      font-size: 1.1em;
+    font-size: 1.1em;
   }
 
   #service-price {
-      font-size: 1.3em;
+    font-size: 1.3em;
   }
 }
 

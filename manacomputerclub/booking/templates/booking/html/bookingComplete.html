@@ -6,48 +6,36 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <title>Mana - бронирование</title>
     <head>
-      <link
-        rel="icon"
-        type="image/jpg"
-        href="{% static 'mana/imgs/logo.jpg' %}"
-      />
+      <link rel="icon" type="image/jpg" href="{% static 'mana/imgs/logo.jpg' %}" />
     </head>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="stylesheet" type="text/css" media="screen" href="{% static 'mana/css/header_footer.css' %}" />
     <link rel="stylesheet" type="text/css" media="screen" href="{% static 'booking/css/bookingComplete.css' %}" />
     <link rel="stylesheet" type="text/css" media="screen" href="{% static 'mana/css/responsive.css' %}" />
     <script src="{% static 'booking/js/mobile.js' %}"></script>
-    <link
-      href="https://fonts.googleapis.com/css?family=Quicksand"
-      rel="stylesheet"
-    />
+    <link href="https://fonts.googleapis.com/css?family=Quicksand" rel="stylesheet" />
     <link
       rel="stylesheet"
       href="https://use.fontawesome.com/releases/v5.1.0/css/all.css"
       integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt"
       crossorigin="anonymous"
     />
-    <link
-      href="https://fonts.googleapis.com/css?family=Open+Sans"
-      rel="stylesheet"
-    />
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet" />
   </head>
 
   <body>
-    <header> 
-      
-      <div id="logo">        
-        <h2> <a href="{% url 'home' %}"> MANA </a></h2>
+    <header>
+      <div id="logo">
+        <h2><a href="{% url 'home' %}"> MANA </a></h2>
       </div>
 
       <nav id="menu">
         <div id="navbar">
           <input id="menu__toggle" type="checkbox" />
           <label class="menu__btn" for="menu__toggle">
-              <span></span>
+            <span></span>
           </label>
           <ul class="menu__box">
-            
             <li><a href="{% url 'services' %}"> Услуги и компьютеры </a></li>
             <li><a href="{% url 'news' %}"> Новости </a></li>
             <li><a href="{% url 'about' %}"> Контакты </a></li>
@@ -55,30 +43,31 @@
               <a class="order" href="{% url 'booking:order' %}"> Забронировать </a>
             </li>
             {% if user.is_authenticated %}
-              <li>
-                <a class="account" href="{% url 'account' %}"> Личный кабинет: {{ user }} </a>
-              </li>
-              {% if user.is_authenticated and user.username == "admin" %}
-                <li><a class="admin-link"  href="{% url 'admin:login' %}"> Администрирование </a></li>
-              {% endif %}
-              {% comment %} <li><a class="account" href="{% url 'account' %}">{{ user }}</a></li> {% endcomment %}
-              <li>
-                <a class="account" href="{% url 'users:logout' %}"> Выйти </a>
-              </li>
-              {% else %}
-              <li>
-                <a class="sign" href="{% url 'users:register' %}"> Регистрация </a>
-              </li>
-              <li><a class="sign" href="{% url 'users:login' %}"> Вход </a></li>
+            <li>
+              <a class="account" href="{% url 'account' %}"> Личный кабинет: {{ user }} </a>
+            </li>
+            {% if user.is_authenticated and user.username == "admin" %}
+            <li><a class="admin-link" href="{% url 'admin:login' %}"> Администрирование </a></li>
             {% endif %}
+            <li>
+              <a class="account" href="{% url 'users:logout' %}"> Выйти </a>
+            </li>
+            {% else %}
+            <li>
+              <a class="sign" href="{% url 'users:register' %}"> Регистрация </a>
+            </li>
+            <li><a class="sign" href="{% url 'users:login' %}"> Вход </a></li>
+            {% endif %}
+          </ul>
+        </div>
       </nav>
     </header>
 
     <div class="center-container">
       <section class="booking-confirmation">
-          <h2>Вы успешно забронировали!</h2>
-          <p>Детали брони можно посмотреть в <a href="/account">личном кабинете</a>.</p>
-          <button class="account-button" onclick="window.location.href='/account'">Перейти в личный кабинет</button>
+        <h2>Вы успешно забронировали!</h2>
+        <p>Детали брони можно посмотреть в <a href="/account">личном кабинете</a>.</p>
+        <button class="account-button" onclick="window.location.href='/account'">Перейти в личный кабинет</button>
       </section>
     </div>
     <footer id="contact">
@@ -86,25 +75,18 @@
       <ul>
         <p>+7 (922) 900-01-80</p>
         <li>
-          <a href="https://vk.com/mana_kirov"
-            ><i class="fab fa-vk fa-2x"></i
-          ></a>
+          <a href="https://vk.com/mana_kirov"><i class="fab fa-vk fa-2x"></i></a>
         </li>
         <li>
-          <a href="https://t.me/mana_kirov"
-            ><i class="fab fa-telegram fa-2x"></i
-          ></a>
+          <a href="https://t.me/mana_kirov"><i class="fab fa-telegram fa-2x"></i></a>
         </li>
         <li>
-          <a
-            href="https://vk.com/away.php?to=https%3A%2F%2Fwww.twitch.tv%2Fmana_off"
+          <a href="https://vk.com/away.php?to=https%3A%2F%2Fwww.twitch.tv%2Fmana_off"
             ><i class="fab fa-twitch fa-2x"></i
           ></a>
         </li>
         <li>
-          <a href="https://discord.gg/A8pYcmUvqf"
-            ><i class="fab fa-discord fa-2x"></i
-          ></a>
+          <a href="https://discord.gg/A8pYcmUvqf"><i class="fab fa-discord fa-2x"></i></a>
         </li>
       </ul>
     </footer>

@@ -125,11 +125,6 @@ header {
   object-fit: contain;
 }
 
-/* .logo_img{
-    position: relative;
-    right: -50px;
-} */
-
 #menu {
   height: auto;
   width: 100%;
@@ -216,7 +211,7 @@ footer ul {
   justify-content: space-between;
   padding: 0;
 }
-  
+
 footer ul li {
   margin-left: 10px;
 }
@@ -235,7 +230,6 @@ li {
   footer {
     flex-direction: column;
     position: relative;
-
   }
 
   footer p {
